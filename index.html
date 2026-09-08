@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Binaire, hexadécimal, IPv4 &amp; IPv6 — exercices interactifs</title>
+<style>
+  :root{
+    --bg:#f4f6f9;
+    --surface:#ffffff;
+    --ink:#1b2432;
+    --ink-soft:#54606f;
+    --line:#dde3ec;
+    --accent:#2f4bc0;
+    --accent-soft:#eaeefb;
+    --ok:#1f7a34;
+    --ok-bg:#e7f6ea;
+    --ko:#bd2130;
+    --ko-bg:#fdeaec;
+    --mono:"SFMono-Regular",ui-monospace,"Cascadia Mono","Consolas","Liberation Mono",monospace;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    margin:0;
+    font-family:var(--sans);
+    color:var(--ink);
+    background:var(--bg);
+    line-height:1.55;
+    padding-bottom:88px; /* espace pour le bandeau fixe */
+  }
+  .wrap{max-width:820px;margin:0 auto;padding:28px 20px 40px;}
+
+  header.page{margin-bottom:10px;}
+  header.page h1{
+    font-size:1.6rem;line-height:1.2;margin:0 0 6px;letter-spacing:-.01em;
+  }
+  header.page p.lead{margin:0;color:var(--ink-soft);font-size:.98rem;}
+  .howto{
+    margin-top:16px;background:var(--surface);border:1px solid var(--line);
+    border-radius:12px;padding:14px 16px;font-size:.9rem;color:var(--ink-soft);
+  }
+  .howto strong{color:var(--ink);}
+
+  section.exo{
+    background:var(--surface);border:1px solid var(--line);border-radius:14px;
+    padding:22px 22px 18px;margin:26px 0;
+  }
+  .exo > h2{
+    font-size:1.18rem;margin:0 0 4px;color:var(--accent);letter-spacing:-.01em;
+  }
+  .exo .intro{font-size:.92rem;color:var(--ink-soft);margin:6px 0 4px;}
+  .exo .intro code, .exo .intro .m{font-family:var(--mono);color:var(--ink);}
+  .subhead{
+    font-weight:600;margin:20px 0 2px;color:var(--ink);font-size:1rem;
+    border-top:1px solid var(--line);padding-top:16px;
+  }
+
+  .q{padding:16px 0;border-bottom:1px dashed var(--line);}
+  .q:last-of-type{border-bottom:none;}
+  .q .enonce{margin:0 0 4px;}
+  .q .enonce .num{
+    display:inline-block;font-family:var(--mono);font-size:.82rem;font-weight:700;
+    color:#fff;background:var(--accent);border-radius:6px;padding:2px 7px;margin-right:8px;
+    vertical-align:1px;
+  }
+  .q .enonce .txt{font-weight:700;}
+  .q .consigne{font-size:.82rem;color:var(--ink-soft);margin:2px 0 10px 0;}
+  .q .consigne .m{font-family:var(--mono);}
+
+  .answer-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+  .answer-row input[type=text]{
+    flex:1 1 240px;min-width:0;font-family:var(--mono);font-size:.95rem;
+    padding:9px 11px;border:1.5px solid var(--line);border-radius:9px;background:#fff;color:var(--ink);
+  }
+  .answer-row input[type=text]:focus{outline:2px solid var(--accent-soft);border-color:var(--accent);}
+  .answer-row input[disabled]{background:#f7f8fa;color:var(--ink);opacity:1;}
+  button{font-family:var(--sans);cursor:pointer;}
+  .btn-valider{
+    flex:0 0 auto;padding:9px 16px;border:none;border-radius:9px;
+    background:var(--accent);color:#fff;font-weight:600;font-size:.9rem;
+  }
+  .btn-valider:hover{background:#243a9c;}
+  .btn-valider:disabled{background:#aeb7c7;cursor:not-allowed;}
+
+  .verdict{margin-top:10px;font-weight:600;font-size:.9rem;display:none;}
+  .q.done .verdict{display:block;}
+  .q.correct .answer-row input{border-color:var(--ok);}
+  .q.correct .verdict{color:var(--ok);}
+  .q.incorrect .answer-row input{border-color:var(--ko);}
+  .q.incorrect .verdict{color:var(--ko);}
+
+  .explication{
+    display:none;margin-top:10px;font-size:.9rem;background:#f7f9fc;
+    border:1px solid var(--line);border-left:3px solid var(--accent);
+    border-radius:8px;padding:11px 13px;color:var(--ink);
+  }
+  .q.done .explication{display:block;}
+  .explication .m{font-family:var(--mono);}
+  .explication .sol{font-weight:700;color:var(--accent);}
+  .explication p{margin:.35em 0;}
+  .notprinted-flag{display:none;}
+
+  /* schéma float */
+  .floatmap{display:flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;margin:10px 0;font-size:.8rem;}
+  .floatmap div{padding:8px 6px;text-align:center;}
+  .floatmap .s{flex:1;background:#f0e4ff;}
+  .floatmap .e{flex:8;background:#e4ecff;border-left:1px solid var(--line);border-right:1px solid var(--line);}
+  .floatmap .man{flex:23;background:#e4fbef;}
+  .floatmap b{display:block;font-family:var(--mono);}
+  .floatmap small{color:var(--ink-soft);}
+
+  .exo-footer{margin-top:18px;padding-top:14px;border-top:1px solid var(--line);
+    display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;}
+  .note-live{font-weight:600;font-size:.92rem;}
+  .note-live .val{font-family:var(--mono);color:var(--accent);}
+  .note-print{display:none;font-weight:700;}
+  .btn-print{
+    padding:9px 15px;border:1.5px solid var(--accent);background:#fff;color:var(--accent);
+    border-radius:9px;font-weight:600;font-size:.88rem;
+  }
+  .btn-print:hover{background:var(--accent-soft);}
+
+  /* bandeau fixe */
+  .banner{
+    position:fixed;left:0;right:0;bottom:0;z-index:50;
+    background:var(--ink);color:#fff;
+    display:flex;justify-content:center;align-items:baseline;gap:14px;
+    padding:14px 16px;box-shadow:0 -2px 14px rgba(0,0,0,.12);
+  }
+  .banner .lbl{font-size:.85rem;color:#c4ccd8;}
+  .banner .score{font-family:var(--mono);font-size:1.5rem;font-weight:700;}
+  .banner .ratio{font-size:.82rem;color:#c4ccd8;}
+
+  .print-only{display:none;}
+
+  @media print{
+    body{background:#fff;padding-bottom:0;font-size:12px;}
+    .wrap{max-width:none;padding:0;}
+    .banner,.btn-valider,.btn-print,.howto{display:none !important;}
+    section.exo{border:none;border-top:2px solid #000;border-radius:0;padding:10px 0;margin:0;page-break-inside:avoid;}
+    .explication{display:block !important;background:#fff;border-left:2px solid #000;}
+    .q.done .explication,.q .explication{display:block !important;}
+    .verdict{display:block !important;}
+    .q:not(.done) .verdict{display:none !important;}
+    .note-live{display:none !important;}
+    .note-print{display:block !important;}
+    .print-only{display:block;}
+    .notprinted-flag{display:inline;color:var(--ko);font-weight:600;font-size:.85em;}
+    input[type=text]{border:1px solid #999 !important;background:#fff !important;}
+    a{color:#000;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="page">
+    <h1>Binaire, hexadécimal &amp; adresses réseau</h1>
+    <p class="lead">Trois exercices : IPv4 (Exercice&nbsp;1), IPv6 (Exercice&nbsp;2) et nombres au format <em>float</em> 32&nbsp;bits (Exercice&nbsp;3).</p>
+  </header>
+
+  <div class="howto">
+    Réponds à chaque question puis clique sur <strong>Valider</strong>. Une fois validée, la réponse
+    est <strong>verrouillée</strong> et l'explication apparaît. Ta note en cours s'affiche en bas de l'écran.
+    À la fin, utilise <strong>Imprimer ma copie</strong> pour enregistrer ta copie corrigée (en PDF par exemple).
+  </div>
+
+  <div id="exos"></div>
+
+  <div class="note-print print-only" id="globalPrint" style="margin-top:24px;border-top:2px solid #000;padding-top:10px;font-size:1.05em;"></div>
+</div>
+
+<div class="banner" id="banner">
+  <span class="lbl">Note en cours</span>
+  <span class="score" id="bannerScore">–/20</span>
+  <span class="ratio" id="bannerRatio">aucune réponse validée</span>
+</div>
+
+<script>
+/* ------------------------------------------------------------------
+   DONNÉES : exercices, questions, réponses acceptées, explications
+------------------------------------------------------------------ */
+const DATA = [
+  {
+    title:"Exercice 1 — Binaire et décimal à partir des adresses IPv4",
+    intro:`IPv4 écrit une adresse en <span class="m">4 parties</span> séparées par des points, chaque partie (octet) allant de <span class="m">0</span> à <span class="m">255</span> en décimal. Plage totale : <span class="m">0.0.0.0</span> à <span class="m">255.255.255.255</span>.`,
+    groups:[
+      {head:`Exemple 1 — Réseau d'un particulier : <span class="m">192.168.1.x</span> (x = adresse d'un appareil)`,
+       qs:["q1","q2","q3"]},
+      {head:`Exemple 2 — Réseau d'une petite entreprise : <span class="m">128.16.x.y</span>`,
+       qs:["q4","q5"]},
+      {head:`Généralisation — <span class="m">w.x.y.z</span>, chaque octet de 0 à 255`,
+       qs:["q6","q7"]}
+    ]
+  },
+  {
+    title:"Exercice 2 — Binaire, décimal et hexadécimal à partir des adresses IPv6",
+    intro:`IPv6 écrit une adresse en <span class="m">8 parties</span> séparées par des « : », chaque partie donnée en hexadécimal, de <span class="m">0000</span> à <span class="m">FFFF</span>. Exemple : <span class="m">2001:0db8:0000:85a3:0010:0a0b:8001:ec1f</span>.`,
+    groups:[
+      {head:`Préliminaires`, qs:["e2q1a","e2q1b","e2q2"]},
+      {head:`Étude d'un des 8 éléments d'une adresse IPv6 : l'élément <span class="m">ec1f</span>`, qs:["e2q3","e2q4","e2q5"]},
+      {head:`Généralisation`, qs:["e2q6","e2q7"]}
+    ]
+  },
+  {
+    title:"Exercice 3 — Nombres au format float (32 bits)",
+    intro:`<div class="floatmap">
+        <div class="s"><b>1</b><small>signe<br>bit 31</small></div>
+        <div class="e"><b>8 bits</b><small>exposant<br>bits 30→23</small></div>
+        <div class="man"><b>23 bits</b><small>mantisse<br>bits 22→0</small></div>
+      </div>
+      Signe : <span class="m">0</span> = positif, <span class="m">1</span> = négatif. Exposant réel = valeur des bits d'exposant − 127 (décalage).
+      Valeur = signe × <span class="m">(1,mantisse)</span> × 2<sup>exposant − 127</sup>.
+      <br><em>Exemple donné dans le cours :</em> <span class="m">0 10000010 11000000000000000000000</span> → +1,75 × 2<sup>3</sup> = <strong>14</strong>.`,
+    groups:[
+      {head:`Retrouve la valeur décimale des nombres flottants suivants`, qs:["e3a","e3b","e3c"]}
+    ]
+  }
+];
+
+/* Chaque question : label, énoncé, consigne, type, réponses acceptées, explication. */
+const Q = {
+  // ---------- EXERCICE 1 ----------
+  q1:{ex:0,label:"Q1",
+    enonce:`« x » peut prendre une valeur de 0 à 255 (décimal). Sur combien de <em>bits</em> est-il codé en binaire&nbsp;?`,
+    consigne:`Réponse : un nombre entier de bits.`,
+    type:"number",dec:0,accept:[8],
+    exp:`x prend <b>256 valeurs</b> distinctes (0 à 255). Or 256 = 2<sup>8</sup>, donc il faut <span class="sol">8 bits</span> (soit 1 octet).`},
+
+  q2:{ex:0,label:"Q2",
+    enonce:`L'adresse de mon ordinateur est <span class="m">192.168.1.2</span>. Écris cette adresse en binaire.`,
+    consigne:`Chaque octet sur 8 bits. Les points et espaces sont facultatifs.`,
+    type:"binary",accept:["11000000101010000000000100000010"],
+    exp:`On convertit octet par octet, chacun sur 8 bits :<br>
+      <span class="m">192 = 128+64 = 11000000</span><br>
+      <span class="m">168 = 128+32+8 = 10101000</span><br>
+      <span class="m">1 = 00000001</span> &nbsp;·&nbsp; <span class="m">2 = 00000010</span><br>
+      Adresse : <span class="sol m">11000000.10101000.00000001.00000010</span>`},
+
+  q3:{ex:0,label:"Q3",
+    enonce:`Combien de matériels différents puis-je relier sur ce réseau <span class="m">192.168.1.x</span>&nbsp;?`,
+    consigne:`Réponse : un nombre entier.`,
+    type:"number",dec:0,accept:[256,254],
+    exp:`x est codé sur 8 bits → 2<sup>8</sup> = <span class="sol">256</span> valeurs possibles.
+      <br><em>Précision réseau :</em> sur un vrai réseau, 2 adresses sont réservées (l'adresse du réseau <span class="m">.0</span> et l'adresse de diffusion <span class="m">.255</span>), soit <b>254</b> machines réellement adressables. Les deux réponses sont acceptées.`},
+
+  q4:{ex:0,label:"Q4",
+    enonce:`Pour <span class="m">128.16.x.y</span>, « x » et « y » vont chacun de 0 à 255. Sur combien de bits au total l'adresse d'un élément est-elle codée&nbsp;?`,
+    consigne:`Réponse : un nombre entier de bits.`,
+    type:"number",dec:0,accept:[16],
+    exp:`x sur 8 bits + y sur 8 bits = <span class="sol">16 bits</span> au total.`},
+
+  q5:{ex:0,label:"Q5",
+    enonce:`Combien de matériels différents puis-je relier sur ce réseau <span class="m">128.16.x.y</span>&nbsp;?`,
+    consigne:`Réponse : un nombre entier.`,
+    type:"number",dec:0,accept:[65536,65534],
+    exp:`16 bits → 2<sup>16</sup> = <span class="sol">65 536</span> combinaisons.
+      <br><em>Précision réseau :</em> en retirant les 2 adresses réservées, <b>65 534</b> machines utilisables. Les deux réponses sont acceptées.`},
+
+  q6:{ex:0,label:"Q6",
+    enonce:`Si les 4 octets <span class="m">w.x.y.z</span> peuvent être choisis (chacun de 0 à 255), sur combien de bits au total l'adresse complète est-elle codée&nbsp;?`,
+    consigne:`Réponse : un nombre entier de bits.`,
+    type:"number",dec:0,accept:[32],
+    exp:`4 octets × 8 bits = <span class="sol">32 bits</span>. C'est la taille d'une adresse IPv4.`},
+
+  q7:{ex:0,label:"Q7",
+    enonce:`Combien de matériels différents puis-je relier sur Internet avec la norme IPv4&nbsp;?`,
+    consigne:`Réponse : un nombre entier (les séparateurs de milliers sont tolérés).`,
+    type:"number",dec:0,accept:[4294967296],
+    exp:`32 bits → 2<sup>32</sup> = <span class="sol">4 294 967 296</span> adresses, soit environ <b>4,3 milliards</b>. C'est trop peu aujourd'hui : d'où l'arrivée d'IPv6.`},
+
+  // ---------- EXERCICE 2 ----------
+  e2q1a:{ex:1,label:"Q1a",
+    enonce:`Convertis le chiffre hexadécimal <span class="m">E</span> en <em>décimal</em>.`,
+    consigne:`Réponse : un nombre entier.`,
+    type:"number",dec:0,accept:[14],
+    exp:`En hexadécimal, après 9 on continue avec les lettres : A=10, B=11, C=12, D=13, <span class="sol">E = 14</span>, F=15.`},
+
+  e2q1b:{ex:1,label:"Q1b",
+    enonce:`Convertis maintenant ce même <span class="m">E</span> en <em>binaire</em>.`,
+    consigne:`Réponse : les bits (un chiffre hexa tient sur 4 bits).`,
+    type:"binary",accept:["1110","00001110"],
+    exp:`14 = 8 + 4 + 2 = <span class="sol m">1110</span> (sur 4 bits).`},
+
+  e2q2:{ex:1,label:"Q2",
+    enonce:`Combien faut-il de bits pour coder un « chiffre » hexadécimal&nbsp;?`,
+    consigne:`Réponse : un nombre entier de bits.`,
+    type:"number",dec:0,accept:[4],
+    exp:`Un chiffre hexa a 16 valeurs possibles (0 à F). Or 16 = 2<sup>4</sup>, donc <span class="sol">4 bits</span> suffisent (et sont nécessaires).`},
+
+  e2q3:{ex:1,label:"Q3",
+    enonce:`Convertis le nombre hexadécimal <span class="m">ec1f</span> en décimal.`,
+    consigne:`Réponse : un nombre entier.`,
+    type:"number",dec:0,accept:[60447],
+    exp:`On pondère chaque chiffre par une puissance de 16 :<br>
+      <span class="m">e·16³ + c·16² + 1·16¹ + f·16⁰</span><br>
+      = <span class="m">14·4096 + 12·256 + 1·16 + 15</span><br>
+      = <span class="m">57344 + 3072 + 16 + 15</span> = <span class="sol">60 447</span>.`},
+
+  e2q4:{ex:1,label:"Q4",
+    enonce:`Convertis <span class="m">ec1f</span> en binaire.`,
+    consigne:`Réponse : les bits (chaque chiffre hexa → 4 bits). Espaces facultatifs.`,
+    type:"binary",accept:["1110110000011111"],
+    exp:`Chaque chiffre hexa se traduit par 4 bits :<br>
+      <span class="m">e=1110 · c=1100 · 1=0001 · f=1111</span><br>
+      Résultat : <span class="sol m">1110 1100 0001 1111</span>.`},
+
+  e2q5:{ex:1,label:"Q5",
+    enonce:`Sur combien de bits un élément IPv6 (comme <span class="m">ec1f</span>) est-il codé&nbsp;?`,
+    consigne:`Réponse : un nombre entier de bits.`,
+    type:"number",dec:0,accept:[16],
+    exp:`4 chiffres hexa × 4 bits = <span class="sol">16 bits</span> par élément.`},
+
+  e2q6:{ex:1,label:"Q6",
+    enonce:`Sur combien de bits une adresse IPv6 complète est-elle codée&nbsp;?`,
+    consigne:`Réponse : un nombre entier de bits.`,
+    type:"number",dec:0,accept:[128],
+    exp:`8 éléments × 16 bits = <span class="sol">128 bits</span>.`},
+
+  e2q7:{ex:1,label:"Q7",
+    enonce:`Combien de matériels différents puis-je relier sur Internet avec IPv6&nbsp;?`,
+    consigne:`Réponse acceptée sous plusieurs formes : <span class="m">2^128</span>, la valeur exacte, ou <span class="m">3,4×10^38</span>.`,
+    type:"pow2_128",
+    exp:`128 bits → 2<sup>128</sup> ≈ <span class="sol">3,4 × 10<sup>38</sup></span> adresses (le nombre exact est
+      340 282 366 920 938 463 463 374 607 431 768 211 456). Autrement dit&nbsp: assez pour très, très longtemps.`},
+
+  // ---------- EXERCICE 3 ----------
+  e3a:{ex:2,label:"a)",
+    enonce:`<span class="m">1&nbsp;&nbsp;10000010&nbsp;&nbsp;11110100000000000000000</span>`,
+    consigne:`Donne la valeur décimale exacte (arrondir au millième si besoin). Le point ou la virgule décimale sont acceptés.`,
+    type:"number",dec:3,accept:[-15.625],
+    exp:`<p><b>Signe</b> : bit = 1 → nombre <b>négatif</b>.</p>
+      <p><b>Exposant</b> : <span class="m">10000010</span> = 128+2 = 130 ; exposant réel = 130 − 127 = <b>3</b>.</p>
+      <p><b>Mantisse</b> : <span class="m">1,111101…</span> = 1 + ½ + ¼ + ⅛ + 1/16 + 1/64 = 1,953125.</p>
+      <p>Valeur = − 1,953125 × 2³ = <span class="sol">−15,625</span>.</p>`},
+
+  e3b:{ex:2,label:"b)",
+    enonce:`<span class="m">0&nbsp;&nbsp;10001000&nbsp;&nbsp;01101100001000000000000</span>`,
+    consigne:`Donne la valeur décimale exacte (arrondir au millième si besoin).`,
+    type:"number",dec:3,accept:[728.25],
+    exp:`<p><b>Signe</b> : bit = 0 → nombre <b>positif</b>.</p>
+      <p><b>Exposant</b> : <span class="m">10001000</span> = 128+8 = 136 ; exposant réel = 136 − 127 = <b>9</b>.</p>
+      <p><b>Mantisse</b> : <span class="m">1,0110110000100…</span> = 1 + ¼ + ⅛ + 1/32 + 1/64 + 1/2048 = 1,42236328125.</p>
+      <p>Valeur = + 1,42236328125 × 2⁹ = <span class="sol">728,25</span>.</p>`},
+
+  e3c:{ex:2,label:"c)",
+    enonce:`<span class="m">11000010000011100000000000000000</span>`,
+    consigne:`Le nombre est donné « collé » sur 32 bits : découpe-le en 1 + 8 + 23. Valeur décimale exacte.`,
+    type:"number",dec:3,accept:[-35.5],
+    exp:`<p>Découpage : <span class="m">1 | 10000100 | 00011100000000000000000</span>.</p>
+      <p><b>Signe</b> : 1 → <b>négatif</b>.</p>
+      <p><b>Exposant</b> : <span class="m">10000100</span> = 128+4 = 132 ; exposant réel = 132 − 127 = <b>5</b>.</p>
+      <p><b>Mantisse</b> : <span class="m">1,000111…</span> = 1 + 1/16 + 1/32 + 1/64 = 1,109375.</p>
+      <p>Valeur = − 1,109375 × 2⁵ = <span class="sol">−35,5</span>.</p>`}
+};
+
+/* ------------------------------------------------------------------
+   COMPARAISON DES RÉPONSES (tolérance de saisie)
+------------------------------------------------------------------ */
+function stripAccents(s){return s.normalize("NFD").replace(/[\u0300-\u036f]/g,"");}
+
+function normText(s){
+  return stripAccents(String(s).toLowerCase())
+    .replace(/[.,;:!?"'()\[\]«»]/g," ")
+    .replace(/\s+/g," ").trim();
+}
+
+function normBinary(s){return String(s).replace(/[^01]/g,"");}
+
+function toNumber(s){
+  let t=String(s).trim().toLowerCase().replace(/\s+/g,"");
+  t=t.replace(/[\u2212\u2012\u2013\u2014\u2015]/g,"-"); // vrai « moins », tirets → -
+  if(t==="")return null;
+  if(t.includes(",")&&t.includes(".")){          // ex : 1.234,56 -> point = millier
+    t=t.replace(/\./g,"").replace(",",".");
+  }else if(t.includes(",")){                      // virgule décimale
+    t=t.replace(",",".");
+  }else{
+    const dots=(t.match(/\./g)||[]).length;       // plusieurs points = milliers
+    if(dots>1)t=t.replace(/\./g,"");
+  }
+  const v=parseFloat(t);
+  return isNaN(v)?null:v;
+}
+
+function levenshtein(a,b){
+  const m=a.length,n=b.length;
+  if(!m)return n; if(!n)return m;
+  const d=Array.from({length:m+1},(_,i)=>[i,...Array(n).fill(0)]);
+  for(let j=0;j<=n;j++)d[0][j]=j;
+  for(let i=1;i<=m;i++)for(let j=1;j<=n;j++){
+    const c=a[i-1]===b[j-1]?0:1;
+    d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+c);
+  }
+  return d[m][n];
+}
+
+function check(q,raw){
+  const input=raw.trim();
+  if(input==="")return false;
+
+  if(q.type==="number"){
+    const u=toNumber(input);
+    if(u===null)return false;
+    const dec=q.dec||0;
+    const tol=0.5*Math.pow(10,-dec)+1e-9;
+    return q.accept.some(a=>Math.abs(u-a)<=tol);
+  }
+
+  if(q.type==="binary"){
+    const u=normBinary(input);
+    return q.accept.some(a=>u===normBinary(a));
+  }
+
+  if(q.type==="pow2_128"){
+    let t=stripAccents(input.toLowerCase()).replace(/\s+/g,"")
+          .replace(/environ|≈|~/g,"").replace(/×|\*/g,"x").replace(",",".");
+    const exact="340282366920938463463374607431768211456";
+    if(t===exact)return true;
+    if(/^2\^?128$/.test(t))return true;               // 2^128 ou 2128
+    if(/^3\.4x?10\^?38$/.test(t))return true;          // 3.4x10^38 / 3.410^38
+    if(/^3\.4e\+?38$/.test(t))return true;             // notation 3.4e38
+    return false;
+  }
+
+  // texte générique (non utilisé ici, prévu par sécurité)
+  const u=normText(input);
+  return q.accept.some(a=>{
+    const na=normText(a);
+    if(u===na)return true;
+    if(na.length<=4)return false;                      // pas de Levenshtein sur réponses courtes
+    const thr=Math.max(1,Math.floor(na.length*0.2));
+    return levenshtein(u,na)<=thr;
+  });
+}
+
+/* ------------------------------------------------------------------
+   CONSTRUCTION DE LA PAGE
+------------------------------------------------------------------ */
+const state={}; // id -> {validated, correct, ex}
+
+function fmtNote(n){
+  return (Math.round(n*100)/100).toString().replace(".",",");
+}
+
+function buildQuestion(id){
+  const q=Q[id];
+  state[id]={validated:false,correct:false,ex:q.ex};
+  const wrap=document.createElement("div");
+  wrap.className="q";wrap.id="q_"+id;
+  wrap.innerHTML=`
+    <p class="enonce"><span class="num">${q.label}</span><span class="txt">${q.enonce}</span></p>
+    <p class="consigne">${q.consigne}</p>
+    <div class="answer-row">
+      <input type="text" id="in_${id}" autocomplete="off" spellcheck="false" aria-label="Réponse ${q.label}">
+      <button class="btn-valider" id="bt_${id}">Valider</button>
+    </div>
+    <div class="verdict" id="vd_${id}"></div>
+    <div class="explication" id="ex_${id}">
+      <span class="notprinted-flag print-only">Question non validée — comptée comme fausse. </span>
+      ${q.exp}
+    </div>`;
+  return wrap;
+}
+
+function validate(id){
+  const st=state[id];
+  if(st.validated)return;
+  const input=document.getElementById("in_"+id);
+  const btn=document.getElementById("bt_"+id);
+  const qbox=document.getElementById("q_"+id);
+  const verdict=document.getElementById("vd_"+id);
+  const ok=check(Q[id],input.value);
+
+  st.validated=true;st.correct=ok;
+  input.disabled=true;btn.disabled=true;          // verrouillage définitif
+  qbox.classList.add("done",ok?"correct":"incorrect");
+  verdict.textContent=ok?"✔ Correct":"✖ Incorrect";
+  // retirer le drapeau "non validée" (elle vient d'être validée)
+  const flag=qbox.querySelector(".notprinted-flag");
+  if(flag)flag.remove();
+  updateScores();
+}
+
+function updateScores(){
+  // Global (bandeau) : sur les questions validées
+  let gValid=0,gGood=0,gTotal=0;
+  const perEx={};
+  DATA.forEach((_,i)=>perEx[i]={valid:0,good:0,total:0});
+
+  for(const id in state){
+    const st=state[id];
+    gTotal++;perEx[st.ex].total++;
+    if(st.validated){
+      gValid++;perEx[st.ex].valid++;
+      if(st.correct){gGood++;perEx[st.ex].good++;}
+    }
+  }
+
+  // Bandeau global (note en cours = ratio sur réponses validées)
+  const bScore=document.getElementById("bannerScore");
+  const bRatio=document.getElementById("bannerRatio");
+  if(gValid===0){
+    bScore.textContent="–/20";
+    bRatio.textContent="aucune réponse validée";
+  }else{
+    bScore.textContent=fmtNote(gGood/gValid*20)+"/20";
+    bRatio.textContent=gGood+" bonne(s) sur "+gValid+" validée(s)";
+  }
+
+  // Par exercice : note en cours (écran) + note finale (impression)
+  DATA.forEach((_,i)=>{
+    const p=perEx[i];
+    const live=document.getElementById("noteLive_"+i);
+    const prnt=document.getElementById("notePrint_"+i);
+    if(live){
+      live.innerHTML = p.valid===0
+        ? `Note en cours : <span class="val">–/20</span> <span style="color:var(--ink-soft);font-weight:400">(aucune validée)</span>`
+        : `Note en cours : <span class="val">${fmtNote(p.good/p.valid*20)}/20</span> <span style="color:var(--ink-soft);font-weight:400">(${p.good}/${p.valid} validée(s))</span>`;
+    }
+    if(prnt){
+      prnt.textContent=`Note de l'exercice : ${fmtNote(p.good/p.total*20)}/20 (sur ${p.total} questions ; non répondues comptées fausses)`;
+    }
+  });
+
+  // Note finale globale (impression)
+  const gp=document.getElementById("globalPrint");
+  if(gp){
+    gp.textContent=`Note finale globale : ${fmtNote(gGood/gTotal*20)}/20 (sur ${gTotal} questions au total).`;
+  }
+}
+
+function buildPage(){
+  const root=document.getElementById("exos");
+  DATA.forEach((exo,i)=>{
+    const sec=document.createElement("section");
+    sec.className="exo";
+    sec.innerHTML=`<h2>${exo.title}</h2><div class="intro">${exo.intro}</div>`;
+    exo.groups.forEach(g=>{
+      const h=document.createElement("div");
+      h.className="subhead";h.innerHTML=g.head;
+      sec.appendChild(h);
+      g.qs.forEach(id=>sec.appendChild(buildQuestion(id)));
+    });
+    const footer=document.createElement("div");
+    footer.className="exo-footer";
+    footer.innerHTML=`
+      <div class="note-live" id="noteLive_${i}"></div>
+      <div class="note-print" id="notePrint_${i}"></div>
+      <button class="btn-print" onclick="window.print()">Imprimer ma copie</button>`;
+    sec.appendChild(footer);
+    root.appendChild(sec);
+  });
+
+  // liaison des boutons Valider (+ touche Entrée)
+  for(const id in Q){
+    document.getElementById("bt_"+id).addEventListener("click",()=>validate(id));
+    document.getElementById("in_"+id).addEventListener("keydown",e=>{
+      if(e.key==="Enter"){e.preventDefault();validate(id);}
+    });
+  }
+  updateScores();
+}
+
+document.addEventListener("DOMContentLoaded",buildPage);
+</script>
+</body>
+</html>
