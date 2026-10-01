@@ -3,9 +3,21 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- Fichier généré par outils/generer_index.py à partir de outils/gabarit-exercice-interactif.html : modifier le générateur, pas ce fichier. -->
-<title>Binaire, hexadécimal, IPv4 et IPv6 — exercice interactif</title>
-<meta name="description" content="Conversions entre binaire, décimal et hexadécimal à partir des adresses IPv4 et IPv6, puis décodage de nombres flottants sur 32 bits.">
+<!-- ===================================================================
+     GABARIT — exercice interactif autonome (aucune dépendance externe).
+     À FAIRE pour un nouveau sujet :
+       1. remplacer les textes entre crochets et le contenu de démonstration ;
+       2. intégrer les images (documents, figures, fonds de DR) en data URI ;
+       3. décrire chaque question dans __QCFG__ et chaque tracé dans __SKCFG__ ;
+       4. décrire les parties et leurs durées dans __PARTS__ (la durée fixe
+          la pondération) ;
+       5. ajouter une entrée DECOR et DR_NAMES par fond de tracé.
+     NE PAS MODIFIER : le bloc <style>, le moteur Grading et le moteur
+     applicatif — ils portent la charte graphique et toute la mécanique
+     (modes, chronomètre, notation pondérée, impression, tracés).
+     =================================================================== -->
+<title>[Titre de l'exercice] — exercice interactif</title>
+<meta name="description" content="[Notions travaillées dans l'exercice.]">
 <style>:root{
   --beton:#E3E5E0; --papier:#FFFFFF; --encre:#1C2530; --encre-2:#46525C;
   --trait:#A5ADAA; --trait-fin:#D3D8D5;
@@ -412,11 +424,11 @@ body:not(.mode-training) .only-training,body:not(.mode-exam) .only-exam{display:
 </head>
 <body class="no-mode">
 
+<!-- RAIL DES DOCUMENTS : un bouton par document, .dt pour le dossier technique -->
 <nav class="rail" aria-label="Dossiers de présentation et dossier technique">
-  <button type="button" class="tab" data-doc="DP1" aria-selected="false" title="DP1 : adresses IPv4 et IPv6">DP1</button>
+  <button type="button" class="tab" data-doc="DP1" aria-selected="false" title="Présentation">DP1</button>
   <div class="grp" aria-hidden="true"></div>
-  <button type="button" class="tab dt" data-doc="DT1" aria-selected="false" title="DT1 : bases de numération">DT1</button>
-  <button type="button" class="tab dt" data-doc="DT2" aria-selected="false" title="DT2 : format float 32 bits">DT2</button>
+  <button type="button" class="tab dt" data-doc="DT1" aria-selected="false" title="Document technique">DT1</button>
 </nav>
 
 <aside id="docpanel" aria-label="Documents du sujet" aria-hidden="true">
@@ -430,70 +442,33 @@ body:not(.mode-training) .only-training,body:not(.mode-exam) .only-exam{display:
   <div class="dp-tabs" role="tablist" aria-label="Choisir un document">
     <button type="button" data-doc="DP1" aria-selected="false">DP1</button>
     <button type="button" data-doc="DT1" aria-selected="false">DT1</button>
-    <button type="button" data-doc="DT2" aria-selected="false">DT2</button>
   </div>
   <div class="dp-body">
-    <section class="doc" id="doc-DP1" data-title="DP1 : adresses IPv4 et IPv6" data-kind="Dossier présentation">
-      <div class="doc-text"><h3>À quoi sert une adresse IP ?</h3>
-<p>Chaque appareil connecté à un réseau (ordinateur, téléphone, imprimante, objet connecté) possède une <strong>adresse IP</strong> qui permet de lui acheminer les données, comme une adresse postale permet d'acheminer le courrier.</p>
-<h3>IPv4</h3>
-<p>La norme historique, IPv4, écrit une adresse en <strong>4 nombres décimaux</strong> séparés par des points, chacun compris entre 0 et 255. Exemple : <code>192.168.1.2</code>.</p>
-<p>Les réseaux domestiques utilisent souvent des adresses de la forme <code>192.168.1.x</code>, où seule la dernière partie change d'un appareil à l'autre.</p>
-<h3>IPv6</h3>
-<p>Face à la multiplication des appareils connectés, la norme IPv6 a été introduite. Une adresse IPv6 s'écrit en <strong>8 groupes de 4 chiffres hexadécimaux</strong>, séparés par des « : ». Exemple : <code>2001:0db8:0000:85a3:0010:0a0b:8001:ec1f</code>.</p>
-<p>Pour alléger l'écriture, on peut omettre les zéros de tête d'un groupe (<code>0db8</code> → <code>db8</code>) et remplacer une seule suite de groupes nuls par « :: ».</p></div>
+    <section class="doc" id="doc-DP1" data-title="DP1 : [intitulé]" data-kind="Dossier présentation">
+      <div class="doc-text"><h3>[Titre]</h3><p>[Texte du dossier de présentation.]</p></div>
     </section>
-    <section class="doc" id="doc-DT1" data-title="DT1 : bases de numération" data-kind="Dossier technique">
-      <div class="doc-text"><h3>Binaire (base 2)</h3>
-<p>Chaque bit a un poids qui est une puissance de 2, en partant de la droite :</p>
-<div class="recap-wrap" style="padding:0"><table class="t"><thead><tr><th>Rang</th><th>7</th><th>6</th><th>5</th><th>4</th><th>3</th><th>2</th><th>1</th><th>0</th></tr></thead>
-<tbody><tr><th>Poids</th><td>2<sup>7</sup> = 128</td><td>2<sup>6</sup> = 64</td><td>2<sup>5</sup> = 32</td><td>2<sup>4</sup> = 16</td><td>2<sup>3</sup> = 8</td><td>2<sup>2</sup> = 4</td><td>2<sup>1</sup> = 2</td><td>2<sup>0</sup> = 1</td></tr></tbody></table></div>
-<p><strong>Décimal → binaire</strong> : on retire la plus grande puissance de 2 possible, et on recommence. Exemple : 45 = 32 + 8 + 4 + 1 → <code>00101101</code> sur 8 bits.</p>
-<p><strong>Nombre de valeurs</strong> : avec n bits, on code 2<sup>n</sup> valeurs différentes, de 0 à 2<sup>n</sup> − 1.</p>
-<h3>Hexadécimal (base 16)</h3>
-<p>Seize symboles : les chiffres 0 à 9, puis les lettres A, B, C, D, E, F (majuscules ou minuscules). Chaque chiffre a pour poids une puissance de 16 :</p>
-<div class="recap-wrap" style="padding:0"><table class="t"><thead><tr><th>Rang</th><th>3</th><th>2</th><th>1</th><th>0</th></tr></thead>
-<tbody><tr><th>Poids</th><td>16<sup>3</sup> = 4 096</td><td>16<sup>2</sup> = 256</td><td>16<sup>1</sup> = 16</td><td>16<sup>0</sup> = 1</td></tr></tbody></table></div>
-<p>Exemple : <code>1A</code> = 1 × 16 + 10 × 1 = 26.</p>
-<p><strong>Hexadécimal ↔ binaire</strong> : chaque chiffre hexadécimal se traduit par un groupe de bits de même longueur, que l'on met bout à bout.</p></div>
-    </section>
-    <section class="doc" id="doc-DT2" data-title="DT2 : format float 32 bits" data-kind="Dossier technique">
-      <div class="doc-text"><h3>Organisation des 32 bits</h3><figure class="fig"><svg viewBox="0 0 640 96" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Organisation des 32 bits d'un nombre flottant : 1 bit de signe, 8 bits d'exposant, 23 bits de mantisse">
-<g font-family="Bahnschrift, 'Roboto Condensed', Arial Narrow, sans-serif" text-anchor="middle">
-<rect x="10" y="10" width="40" height="46" fill="#FFF3C4" stroke="#1C2530" stroke-width="2"/>
-<rect x="50" y="10" width="160" height="46" fill="#E6EEF8" stroke="#1C2530" stroke-width="2"/>
-<rect x="210" y="10" width="420" height="46" fill="#E2F1E7" stroke="#1C2530" stroke-width="2"/>
-<text x="30" y="40" font-size="18" font-weight="700" fill="#1C2530">S</text>
-<text x="130" y="40" font-size="18" font-weight="700" fill="#1C2530">Exposant · 8 bits</text>
-<text x="420" y="40" font-size="18" font-weight="700" fill="#1C2530">Mantisse · 23 bits</text>
-<text x="30" y="78" font-size="13" fill="#46525C">bit 31</text>
-<text x="130" y="78" font-size="13" fill="#46525C">bits 30 → 23</text>
-<text x="420" y="78" font-size="13" fill="#46525C">bits 22 → 0</text>
-</g></svg></figure><ul>
-<li><strong>Signe</strong> : <code>0</code> = positif, <code>1</code> = négatif.</li>
-<li><strong>Exposant</strong> : exposant réel = valeur des 8 bits d'exposant − 127 (décalage).</li>
-<li><strong>Mantisse</strong> : on lit <code>1,mantisse</code> en binaire ; les bits après la virgule valent ½, ¼, ⅛, 1/16…</li>
-<li><strong>Valeur</strong> = signe × (1,mantisse)<sub>2</sub> × 2<sup>exposant − 127</sup>.</li>
-</ul><h3>Exemple</h3><p><code>0 10000010 11000000000000000000000</code> : signe +, exposant 130 − 127 = 3, mantisse 1,11<sub>2</sub> = 1,75 → +1,75 × 2<sup>3</sup> = <strong>14</strong>.</p><h3>Valeur des bits de mantisse</h3><div class="recap-wrap" style="padding:0"><table class="t"><thead><tr><th>Bit après la virgule</th><th>1<sup>er</sup></th><th>2<sup>e</sup></th><th>3<sup>e</sup></th><th>4<sup>e</sup></th><th>5<sup>e</sup></th><th>6<sup>e</sup></th></tr></thead><tbody><tr><th>Poids</th><td>0,5</td><td>0,25</td><td>0,125</td><td>0,0625</td><td>0,03125</td><td>0,015625</td></tr></tbody></table></div></div>
+    <section class="doc" id="doc-DT1" data-title="DT1 : [intitulé]" data-kind="Dossier technique">
+      <img class="doc-img" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5MDAiIGhlaWdodD0iNTYwIj48cmVjdCB3aWR0aD0iOTAwIiBoZWlnaHQ9IjU2MCIgZmlsbD0iI2ZmZiIvPjxnIHN0cm9rZT0iI0QzRDhENSIgc3Ryb2tlLXdpZHRoPSIxIj48bGluZSB4MT0iMCIgeTE9IjAiIHgyPSIwIiB5Mj0iNTYwIi8+PGxpbmUgeDE9IjQwIiB5MT0iMCIgeDI9IjQwIiB5Mj0iNTYwIi8+PGxpbmUgeDE9IjgwIiB5MT0iMCIgeDI9IjgwIiB5Mj0iNTYwIi8+PGxpbmUgeDE9IjEyMCIgeTE9IjAiIHgyPSIxMjAiIHkyPSI1NjAiLz48bGluZSB4MT0iMTYwIiB5MT0iMCIgeDI9IjE2MCIgeTI9IjU2MCIvPjxsaW5lIHgxPSIyMDAiIHkxPSIwIiB4Mj0iMjAwIiB5Mj0iNTYwIi8+PGxpbmUgeDE9IjI0MCIgeTE9IjAiIHgyPSIyNDAiIHkyPSI1NjAiLz48bGluZSB4MT0iMjgwIiB5MT0iMCIgeDI9IjI4MCIgeTI9IjU2MCIvPjxsaW5lIHgxPSIzMjAiIHkxPSIwIiB4Mj0iMzIwIiB5Mj0iNTYwIi8+PGxpbmUgeDE9IjM2MCIgeTE9IjAiIHgyPSIzNjAiIHkyPSI1NjAiLz48bGluZSB4MT0iNDAwIiB5MT0iMCIgeDI9IjQwMCIgeTI9IjU2MCIvPjxsaW5lIHgxPSI0NDAiIHkxPSIwIiB4Mj0iNDQwIiB5Mj0iNTYwIi8+PGxpbmUgeDE9IjQ4MCIgeTE9IjAiIHgyPSI0ODAiIHkyPSI1NjAiLz48bGluZSB4MT0iNTIwIiB5MT0iMCIgeDI9IjUyMCIgeTI9IjU2MCIvPjxsaW5lIHgxPSI1NjAiIHkxPSIwIiB4Mj0iNTYwIiB5Mj0iNTYwIi8+PGxpbmUgeDE9IjYwMCIgeTE9IjAiIHgyPSI2MDAiIHkyPSI1NjAiLz48bGluZSB4MT0iNjQwIiB5MT0iMCIgeDI9IjY0MCIgeTI9IjU2MCIvPjxsaW5lIHgxPSI2ODAiIHkxPSIwIiB4Mj0iNjgwIiB5Mj0iNTYwIi8+PGxpbmUgeDE9IjcyMCIgeTE9IjAiIHgyPSI3MjAiIHkyPSI1NjAiLz48bGluZSB4MT0iNzYwIiB5MT0iMCIgeDI9Ijc2MCIgeTI9IjU2MCIvPjxsaW5lIHgxPSI4MDAiIHkxPSIwIiB4Mj0iODAwIiB5Mj0iNTYwIi8+PGxpbmUgeDE9Ijg0MCIgeTE9IjAiIHgyPSI4NDAiIHkyPSI1NjAiLz48bGluZSB4MT0iODgwIiB5MT0iMCIgeDI9Ijg4MCIgeTI9IjU2MCIvPjxsaW5lIHgxPSIwIiB5MT0iMCIgeDI9IjkwMCIgeTI9IjAiLz48bGluZSB4MT0iMCIgeTE9IjQwIiB4Mj0iOTAwIiB5Mj0iNDAiLz48bGluZSB4MT0iMCIgeTE9IjgwIiB4Mj0iOTAwIiB5Mj0iODAiLz48bGluZSB4MT0iMCIgeTE9IjEyMCIgeDI9IjkwMCIgeTI9IjEyMCIvPjxsaW5lIHgxPSIwIiB5MT0iMTYwIiB4Mj0iOTAwIiB5Mj0iMTYwIi8+PGxpbmUgeDE9IjAiIHkxPSIyMDAiIHgyPSI5MDAiIHkyPSIyMDAiLz48bGluZSB4MT0iMCIgeTE9IjI0MCIgeDI9IjkwMCIgeTI9IjI0MCIvPjxsaW5lIHgxPSIwIiB5MT0iMjgwIiB4Mj0iOTAwIiB5Mj0iMjgwIi8+PGxpbmUgeDE9IjAiIHkxPSIzMjAiIHgyPSI5MDAiIHkyPSIzMjAiLz48bGluZSB4MT0iMCIgeTE9IjM2MCIgeDI9IjkwMCIgeTI9IjM2MCIvPjxsaW5lIHgxPSIwIiB5MT0iNDAwIiB4Mj0iOTAwIiB5Mj0iNDAwIi8+PGxpbmUgeDE9IjAiIHkxPSI0NDAiIHgyPSI5MDAiIHkyPSI0NDAiLz48bGluZSB4MT0iMCIgeTE9IjQ4MCIgeDI9IjkwMCIgeTI9IjQ4MCIvPjxsaW5lIHgxPSIwIiB5MT0iNTIwIiB4Mj0iOTAwIiB5Mj0iNTIwIi8+PGxpbmUgeDE9IjAiIHkxPSI1NjAiIHgyPSI5MDAiIHkyPSI1NjAiLz48L2c+PHJlY3QgeD0iLjUiIHk9Ii41IiB3aWR0aD0iODk5IiBoZWlnaHQ9IjU1OSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjQTVBREFBIi8+PHRleHQgeD0iNDUwIiB5PSIzMDAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjI2IiBmaWxsPSIjQTVBREFBIj5Gb25kIGR1IGRvY3VtZW50IHLDqXBvbnNlIChpbWFnZSBkdSBEUik8L3RleHQ+PC9zdmc+" alt="[Description du document technique]" width="900" height="560">
     </section>
   </div>
 </aside>
 
+<!-- PAGE D'ACCUEIL : aucune mention du diplôme, de la session ni de l'épreuve -->
 <section id="home" aria-labelledby="home-title">
   <div class="home-inner">
     <header class="home-head">
-      <h1 id="home-title">Binaire, hexadécimal, IPv4 et IPv6</h1>
-      <p class="home-sub">Comment un réseau numérote-t-il ses appareils ? En partant des adresses IPv4 puis IPv6, tu passes du décimal au binaire et à l'hexadécimal, avant de décoder des nombres à virgule stockés sur 32 bits. 18 questions, environ une heure de travail.</p>
+      <h1 id="home-title">[Titre de l'exercice]</h1>
+      <p class="home-sub">[Une ou deux phrases de présentation du système étudié, puis le volume de travail.]</p>
     </header>
     <figure class="home-hero">
-      <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5MDAiIGhlaWdodD0iNDIwIiB2aWV3Qm94PSIwIDAgOTAwIDQyMCI+PHJlY3Qgd2lkdGg9IjkwMCIgaGVpZ2h0PSI0MjAiIGZpbGw9IiNGRkZGRkYiLz48ZyBzdHJva2U9IiNEM0Q4RDUiIHN0cm9rZS13aWR0aD0iMSI+PGxpbmUgeDE9IjAiIHkxPSIwIiB4Mj0iMCIgeTI9IjQyMCIvPjxsaW5lIHgxPSIzMCIgeTE9IjAiIHgyPSIzMCIgeTI9IjQyMCIvPjxsaW5lIHgxPSI2MCIgeTE9IjAiIHgyPSI2MCIgeTI9IjQyMCIvPjxsaW5lIHgxPSI5MCIgeTE9IjAiIHgyPSI5MCIgeTI9IjQyMCIvPjxsaW5lIHgxPSIxMjAiIHkxPSIwIiB4Mj0iMTIwIiB5Mj0iNDIwIi8+PGxpbmUgeDE9IjE1MCIgeTE9IjAiIHgyPSIxNTAiIHkyPSI0MjAiLz48bGluZSB4MT0iMTgwIiB5MT0iMCIgeDI9IjE4MCIgeTI9IjQyMCIvPjxsaW5lIHgxPSIyMTAiIHkxPSIwIiB4Mj0iMjEwIiB5Mj0iNDIwIi8+PGxpbmUgeDE9IjI0MCIgeTE9IjAiIHgyPSIyNDAiIHkyPSI0MjAiLz48bGluZSB4MT0iMjcwIiB5MT0iMCIgeDI9IjI3MCIgeTI9IjQyMCIvPjxsaW5lIHgxPSIzMDAiIHkxPSIwIiB4Mj0iMzAwIiB5Mj0iNDIwIi8+PGxpbmUgeDE9IjMzMCIgeTE9IjAiIHgyPSIzMzAiIHkyPSI0MjAiLz48bGluZSB4MT0iMzYwIiB5MT0iMCIgeDI9IjM2MCIgeTI9IjQyMCIvPjxsaW5lIHgxPSIzOTAiIHkxPSIwIiB4Mj0iMzkwIiB5Mj0iNDIwIi8+PGxpbmUgeDE9IjQyMCIgeTE9IjAiIHgyPSI0MjAiIHkyPSI0MjAiLz48bGluZSB4MT0iNDUwIiB5MT0iMCIgeDI9IjQ1MCIgeTI9IjQyMCIvPjxsaW5lIHgxPSI0ODAiIHkxPSIwIiB4Mj0iNDgwIiB5Mj0iNDIwIi8+PGxpbmUgeDE9IjUxMCIgeTE9IjAiIHgyPSI1MTAiIHkyPSI0MjAiLz48bGluZSB4MT0iNTQwIiB5MT0iMCIgeDI9IjU0MCIgeTI9IjQyMCIvPjxsaW5lIHgxPSI1NzAiIHkxPSIwIiB4Mj0iNTcwIiB5Mj0iNDIwIi8+PGxpbmUgeDE9IjYwMCIgeTE9IjAiIHgyPSI2MDAiIHkyPSI0MjAiLz48bGluZSB4MT0iNjMwIiB5MT0iMCIgeDI9IjYzMCIgeTI9IjQyMCIvPjxsaW5lIHgxPSI2NjAiIHkxPSIwIiB4Mj0iNjYwIiB5Mj0iNDIwIi8+PGxpbmUgeDE9IjY5MCIgeTE9IjAiIHgyPSI2OTAiIHkyPSI0MjAiLz48bGluZSB4MT0iNzIwIiB5MT0iMCIgeDI9IjcyMCIgeTI9IjQyMCIvPjxsaW5lIHgxPSI3NTAiIHkxPSIwIiB4Mj0iNzUwIiB5Mj0iNDIwIi8+PGxpbmUgeDE9Ijc4MCIgeTE9IjAiIHgyPSI3ODAiIHkyPSI0MjAiLz48bGluZSB4MT0iODEwIiB5MT0iMCIgeDI9IjgxMCIgeTI9IjQyMCIvPjxsaW5lIHgxPSI4NDAiIHkxPSIwIiB4Mj0iODQwIiB5Mj0iNDIwIi8+PGxpbmUgeDE9Ijg3MCIgeTE9IjAiIHgyPSI4NzAiIHkyPSI0MjAiLz48bGluZSB4MT0iOTAwIiB5MT0iMCIgeDI9IjkwMCIgeTI9IjQyMCIvPjxsaW5lIHgxPSIwIiB5MT0iMCIgeDI9IjkwMCIgeTI9IjAiLz48bGluZSB4MT0iMCIgeTE9IjMwIiB4Mj0iOTAwIiB5Mj0iMzAiLz48bGluZSB4MT0iMCIgeTE9IjYwIiB4Mj0iOTAwIiB5Mj0iNjAiLz48bGluZSB4MT0iMCIgeTE9IjkwIiB4Mj0iOTAwIiB5Mj0iOTAiLz48bGluZSB4MT0iMCIgeTE9IjEyMCIgeDI9IjkwMCIgeTI9IjEyMCIvPjxsaW5lIHgxPSIwIiB5MT0iMTUwIiB4Mj0iOTAwIiB5Mj0iMTUwIi8+PGxpbmUgeDE9IjAiIHkxPSIxODAiIHgyPSI5MDAiIHkyPSIxODAiLz48bGluZSB4MT0iMCIgeTE9IjIxMCIgeDI9IjkwMCIgeTI9IjIxMCIvPjxsaW5lIHgxPSIwIiB5MT0iMjQwIiB4Mj0iOTAwIiB5Mj0iMjQwIi8+PGxpbmUgeDE9IjAiIHkxPSIyNzAiIHgyPSI5MDAiIHkyPSIyNzAiLz48bGluZSB4MT0iMCIgeTE9IjMwMCIgeDI9IjkwMCIgeTI9IjMwMCIvPjxsaW5lIHgxPSIwIiB5MT0iMzMwIiB4Mj0iOTAwIiB5Mj0iMzMwIi8+PGxpbmUgeDE9IjAiIHkxPSIzNjAiIHgyPSI5MDAiIHkyPSIzNjAiLz48bGluZSB4MT0iMCIgeTE9IjM5MCIgeDI9IjkwMCIgeTI9IjM5MCIvPjxsaW5lIHgxPSIwIiB5MT0iNDIwIiB4Mj0iOTAwIiB5Mj0iNDIwIi8+PC9nPjx0ZXh0IHg9IjMwIiB5PSI0NiIgZm9udC1mYW1pbHk9IkJhaG5zY2hyaWZ0LCAnUm9ib3RvIENvbmRlbnNlZCcsICdBcmlhbCBOYXJyb3cnLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjIwIiBmb250LXdlaWdodD0iNzAwIiBmaWxsPSIjMUMyNTMwIj5JUHY0IMK3IDMyIGJpdHM8L3RleHQ+PHJlY3QgeD0iMzAiIHk9IjYyIiB3aWR0aD0iMTk2IiBoZWlnaHQ9Ijk2IiBmaWxsPSIjRkZGM0M0IiBzdHJva2U9IiMxQzI1MzAiIHN0cm9rZS13aWR0aD0iMiIvPjx0ZXh0IHg9IjEyOCIgeT0iMTAyIiBmb250LWZhbWlseT0iQmFobnNjaHJpZnQsICdSb2JvdG8gQ29uZGVuc2VkJywgJ0FyaWFsIE5hcnJvdycsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMzAiIGZvbnQtd2VpZ2h0PSI3MDAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiMxQzI1MzAiPjE5MjwvdGV4dD48dGV4dCB4PSIxMjgiIHk9IjE0MCIgZm9udC1mYW1pbHk9IkNvbnNvbGFzLCAnRGVqYVZ1IFNhbnMgTW9ubycsIG1vbm9zcGFjZSIgZm9udC1zaXplPSIyMiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzFGNUZBOCI+MTEwMDAwMDA8L3RleHQ+PGNpcmNsZSBjeD0iMjM0IiBjeT0iMTEwIiByPSI0IiBmaWxsPSIjMUMyNTMwIi8+PHJlY3QgeD0iMjQyIiB5PSI2MiIgd2lkdGg9IjE5NiIgaGVpZ2h0PSI5NiIgZmlsbD0iI0ZGRjNDNCIgc3Ryb2tlPSIjMUMyNTMwIiBzdHJva2Utd2lkdGg9IjIiLz48dGV4dCB4PSIzNDAiIHk9IjEwMiIgZm9udC1mYW1pbHk9IkJhaG5zY2hyaWZ0LCAnUm9ib3RvIENvbmRlbnNlZCcsICdBcmlhbCBOYXJyb3cnLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjMwIiBmb250LXdlaWdodD0iNzAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjMUMyNTMwIj4xNjg8L3RleHQ+PHRleHQgeD0iMzQwIiB5PSIxNDAiIGZvbnQtZmFtaWx5PSJDb25zb2xhcywgJ0RlamFWdSBTYW5zIE1vbm8nLCBtb25vc3BhY2UiIGZvbnQtc2l6ZT0iMjIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiMxRjVGQTgiPjEwMTAxMDAwPC90ZXh0PjxjaXJjbGUgY3g9IjQ0NiIgY3k9IjExMCIgcj0iNCIgZmlsbD0iIzFDMjUzMCIvPjxyZWN0IHg9IjQ1NCIgeT0iNjIiIHdpZHRoPSIxOTYiIGhlaWdodD0iOTYiIGZpbGw9IiNGRkYzQzQiIHN0cm9rZT0iIzFDMjUzMCIgc3Ryb2tlLXdpZHRoPSIyIi8+PHRleHQgeD0iNTUyIiB5PSIxMDIiIGZvbnQtZmFtaWx5PSJCYWhuc2NocmlmdCwgJ1JvYm90byBDb25kZW5zZWQnLCAnQXJpYWwgTmFycm93Jywgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIzMCIgZm9udC13ZWlnaHQ9IjcwMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzFDMjUzMCI+MTwvdGV4dD48dGV4dCB4PSI1NTIiIHk9IjE0MCIgZm9udC1mYW1pbHk9IkNvbnNvbGFzLCAnRGVqYVZ1IFNhbnMgTW9ubycsIG1vbm9zcGFjZSIgZm9udC1zaXplPSIyMiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzFGNUZBOCI+MDAwMDAwMDE8L3RleHQ+PGNpcmNsZSBjeD0iNjU4IiBjeT0iMTEwIiByPSI0IiBmaWxsPSIjMUMyNTMwIi8+PHJlY3QgeD0iNjY2IiB5PSI2MiIgd2lkdGg9IjE5NiIgaGVpZ2h0PSI5NiIgZmlsbD0iI0ZGRjNDNCIgc3Ryb2tlPSIjMUMyNTMwIiBzdHJva2Utd2lkdGg9IjIiLz48dGV4dCB4PSI3NjQiIHk9IjEwMiIgZm9udC1mYW1pbHk9IkJhaG5zY2hyaWZ0LCAnUm9ib3RvIENvbmRlbnNlZCcsICdBcmlhbCBOYXJyb3cnLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjMwIiBmb250LXdlaWdodD0iNzAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjMUMyNTMwIj4yPC90ZXh0Pjx0ZXh0IHg9Ijc2NCIgeT0iMTQwIiBmb250LWZhbWlseT0iQ29uc29sYXMsICdEZWphVnUgU2FucyBNb25vJywgbW9ub3NwYWNlIiBmb250LXNpemU9IjIyIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjMUY1RkE4Ij4wMDAwMDAxMDwvdGV4dD48dGV4dCB4PSIzMCIgeT0iMjEwIiBmb250LWZhbWlseT0iQmFobnNjaHJpZnQsICdSb2JvdG8gQ29uZGVuc2VkJywgJ0FyaWFsIE5hcnJvdycsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjAiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiMxQzI1MzAiPklQdjYgwrcgMTI4IGJpdHM8L3RleHQ+PHJlY3QgeD0iMzAiIHk9IjIyNiIgd2lkdGg9Ijk4IiBoZWlnaHQ9IjQ2IiBmaWxsPSIjRTZFRUY4IiBzdHJva2U9IiMxQzI1MzAiIHN0cm9rZS13aWR0aD0iMS41Ii8+PHRleHQgeD0iNzkiIHk9IjI1NyIgZm9udC1mYW1pbHk9IkNvbnNvbGFzLCAnRGVqYVZ1IFNhbnMgTW9ubycsIG1vbm9zcGFjZSIgZm9udC1zaXplPSIyMiIgZm9udC13ZWlnaHQ9IjcwMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzFDMjUzMCI+MjAwMTwvdGV4dD48cmVjdCB4PSIxMzYiIHk9IjIyNiIgd2lkdGg9Ijk4IiBoZWlnaHQ9IjQ2IiBmaWxsPSIjRTZFRUY4IiBzdHJva2U9IiMxQzI1MzAiIHN0cm9rZS13aWR0aD0iMS41Ii8+PHRleHQgeD0iMTg1IiB5PSIyNTciIGZvbnQtZmFtaWx5PSJDb25zb2xhcywgJ0RlamFWdSBTYW5zIE1vbm8nLCBtb25vc3BhY2UiIGZvbnQtc2l6ZT0iMjIiIGZvbnQtd2VpZ2h0PSI3MDAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiMxQzI1MzAiPjBkYjg8L3RleHQ+PHJlY3QgeD0iMjQyIiB5PSIyMjYiIHdpZHRoPSI5OCIgaGVpZ2h0PSI0NiIgZmlsbD0iI0U2RUVGOCIgc3Ryb2tlPSIjMUMyNTMwIiBzdHJva2Utd2lkdGg9IjEuNSIvPjx0ZXh0IHg9IjI5MSIgeT0iMjU3IiBmb250LWZhbWlseT0iQ29uc29sYXMsICdEZWphVnUgU2FucyBNb25vJywgbW9ub3NwYWNlIiBmb250LXNpemU9IjIyIiBmb250LXdlaWdodD0iNzAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjMUMyNTMwIj4wMDAwPC90ZXh0PjxyZWN0IHg9IjM0OCIgeT0iMjI2IiB3aWR0aD0iOTgiIGhlaWdodD0iNDYiIGZpbGw9IiNFNkVFRjgiIHN0cm9rZT0iIzFDMjUzMCIgc3Ryb2tlLXdpZHRoPSIxLjUiLz48dGV4dCB4PSIzOTciIHk9IjI1NyIgZm9udC1mYW1pbHk9IkNvbnNvbGFzLCAnRGVqYVZ1IFNhbnMgTW9ubycsIG1vbm9zcGFjZSIgZm9udC1zaXplPSIyMiIgZm9udC13ZWlnaHQ9IjcwMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzFDMjUzMCI+ODVhMzwvdGV4dD48cmVjdCB4PSI0NTQiIHk9IjIyNiIgd2lkdGg9Ijk4IiBoZWlnaHQ9IjQ2IiBmaWxsPSIjRTZFRUY4IiBzdHJva2U9IiMxQzI1MzAiIHN0cm9rZS13aWR0aD0iMS41Ii8+PHRleHQgeD0iNTAzIiB5PSIyNTciIGZvbnQtZmFtaWx5PSJDb25zb2xhcywgJ0RlamFWdSBTYW5zIE1vbm8nLCBtb25vc3BhY2UiIGZvbnQtc2l6ZT0iMjIiIGZvbnQtd2VpZ2h0PSI3MDAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiMxQzI1MzAiPjAwMTA8L3RleHQ+PHJlY3QgeD0iNTYwIiB5PSIyMjYiIHdpZHRoPSI5OCIgaGVpZ2h0PSI0NiIgZmlsbD0iI0U2RUVGOCIgc3Ryb2tlPSIjMUMyNTMwIiBzdHJva2Utd2lkdGg9IjEuNSIvPjx0ZXh0IHg9IjYwOSIgeT0iMjU3IiBmb250LWZhbWlseT0iQ29uc29sYXMsICdEZWphVnUgU2FucyBNb25vJywgbW9ub3NwYWNlIiBmb250LXNpemU9IjIyIiBmb250LXdlaWdodD0iNzAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjMUMyNTMwIj4wYTBiPC90ZXh0PjxyZWN0IHg9IjY2NiIgeT0iMjI2IiB3aWR0aD0iOTgiIGhlaWdodD0iNDYiIGZpbGw9IiNFNkVFRjgiIHN0cm9rZT0iIzFDMjUzMCIgc3Ryb2tlLXdpZHRoPSIxLjUiLz48dGV4dCB4PSI3MTUiIHk9IjI1NyIgZm9udC1mYW1pbHk9IkNvbnNvbGFzLCAnRGVqYVZ1IFNhbnMgTW9ubycsIG1vbm9zcGFjZSIgZm9udC1zaXplPSIyMiIgZm9udC13ZWlnaHQ9IjcwMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzFDMjUzMCI+ODAwMTwvdGV4dD48cmVjdCB4PSI3NzIiIHk9IjIyNiIgd2lkdGg9Ijk4IiBoZWlnaHQ9IjQ2IiBmaWxsPSIjRjJCNzA1IiBzdHJva2U9IiMxQzI1MzAiIHN0cm9rZS13aWR0aD0iMyIvPjx0ZXh0IHg9IjgyMSIgeT0iMjU3IiBmb250LWZhbWlseT0iQ29uc29sYXMsICdEZWphVnUgU2FucyBNb25vJywgbW9ub3NwYWNlIiBmb250LXNpemU9IjIyIiBmb250LXdlaWdodD0iNzAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjMUMyNTMwIj5lYzFmPC90ZXh0PjxsaW5lIHgxPSI4MjEiIHkxPSIyNzQiIHgyPSI4MjEiIHkyPSIzMDAiIHN0cm9rZT0iIzFDMjUzMCIgc3Ryb2tlLXdpZHRoPSIyIi8+PGxpbmUgeDE9IjQyMCIgeTE9IjMwMCIgeDI9IjgyMSIgeTI9IjMwMCIgc3Ryb2tlPSIjMUMyNTMwIiBzdHJva2Utd2lkdGg9IjIiLz48cmVjdCB4PSI0MjAiIHk9IjMxMiIgd2lkdGg9IjkyIiBoZWlnaHQ9IjQwIiBmaWxsPSIjRTJGMUU3IiBzdHJva2U9IiMxQzI1MzAiIHN0cm9rZS13aWR0aD0iMS41Ii8+PHRleHQgeD0iNDY2IiB5PSIzMzkiIGZvbnQtZmFtaWx5PSJDb25zb2xhcywgJ0RlamFWdSBTYW5zIE1vbm8nLCBtb25vc3BhY2UiIGZvbnQtc2l6ZT0iMjAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiMxQjdBNDMiPjExMTA8L3RleHQ+PHRleHQgeD0iNDY2IiB5PSIzNzIiIGZvbnQtZmFtaWx5PSJDb25zb2xhcywgJ0RlamFWdSBTYW5zIE1vbm8nLCBtb25vc3BhY2UiIGZvbnQtc2l6ZT0iMTUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiM0NjUyNUMiPmU8L3RleHQ+PHJlY3QgeD0iNTIwIiB5PSIzMTIiIHdpZHRoPSI5MiIgaGVpZ2h0PSI0MCIgZmlsbD0iI0UyRjFFNyIgc3Ryb2tlPSIjMUMyNTMwIiBzdHJva2Utd2lkdGg9IjEuNSIvPjx0ZXh0IHg9IjU2NiIgeT0iMzM5IiBmb250LWZhbWlseT0iQ29uc29sYXMsICdEZWphVnUgU2FucyBNb25vJywgbW9ub3NwYWNlIiBmb250LXNpemU9IjIwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjMUI3QTQzIj4xMTAwPC90ZXh0Pjx0ZXh0IHg9IjU2NiIgeT0iMzcyIiBmb250LWZhbWlseT0iQ29uc29sYXMsICdEZWphVnUgU2FucyBNb25vJywgbW9ub3NwYWNlIiBmb250LXNpemU9IjE1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjNDY1MjVDIj5jPC90ZXh0PjxyZWN0IHg9IjYyMCIgeT0iMzEyIiB3aWR0aD0iOTIiIGhlaWdodD0iNDAiIGZpbGw9IiNFMkYxRTciIHN0cm9rZT0iIzFDMjUzMCIgc3Ryb2tlLXdpZHRoPSIxLjUiLz48dGV4dCB4PSI2NjYiIHk9IjMzOSIgZm9udC1mYW1pbHk9IkNvbnNvbGFzLCAnRGVqYVZ1IFNhbnMgTW9ubycsIG1vbm9zcGFjZSIgZm9udC1zaXplPSIyMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzFCN0E0MyI+MDAwMTwvdGV4dD48dGV4dCB4PSI2NjYiIHk9IjM3MiIgZm9udC1mYW1pbHk9IkNvbnNvbGFzLCAnRGVqYVZ1IFNhbnMgTW9ubycsIG1vbm9zcGFjZSIgZm9udC1zaXplPSIxNSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzQ2NTI1QyI+MTwvdGV4dD48cmVjdCB4PSI3MjAiIHk9IjMxMiIgd2lkdGg9IjkyIiBoZWlnaHQ9IjQwIiBmaWxsPSIjRTJGMUU3IiBzdHJva2U9IiMxQzI1MzAiIHN0cm9rZS13aWR0aD0iMS41Ii8+PHRleHQgeD0iNzY2IiB5PSIzMzkiIGZvbnQtZmFtaWx5PSJDb25zb2xhcywgJ0RlamFWdSBTYW5zIE1vbm8nLCBtb25vc3BhY2UiIGZvbnQtc2l6ZT0iMjAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiMxQjdBNDMiPjExMTE8L3RleHQ+PHRleHQgeD0iNzY2IiB5PSIzNzIiIGZvbnQtZmFtaWx5PSJDb25zb2xhcywgJ0RlamFWdSBTYW5zIE1vbm8nLCBtb25vc3BhY2UiIGZvbnQtc2l6ZT0iMTUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiM0NjUyNUMiPmY8L3RleHQ+PHRleHQgeD0iMzAiIHk9IjM0MCIgZm9udC1mYW1pbHk9IkJhaG5zY2hyaWZ0LCAnUm9ib3RvIENvbmRlbnNlZCcsICdBcmlhbCBOYXJyb3cnLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE3IiBmaWxsPSIjNDY1MjVDIj4xIGNoaWZmcmUgaGV4YWTDqWNpbWFsID0gNCBiaXRzPC90ZXh0Pjx0ZXh0IHg9IjMwIiB5PSI0MDAiIGZvbnQtZmFtaWx5PSJCYWhuc2NocmlmdCwgJ1JvYm90byBDb25kZW5zZWQnLCAnQXJpYWwgTmFycm93Jywgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNyIgZmlsbD0iIzQ2NTI1QyI+ZmxvYXQgMzIgYml0cyA6IHNpZ25lIHwgZXhwb3NhbnQgfCBtYW50aXNzZTwvdGV4dD48cmVjdCB4PSI0MjAiIHk9IjM4NCIgd2lkdGg9IjEyIiBoZWlnaHQ9IjI0IiBmaWxsPSIjRkZGM0M0IiBzdHJva2U9IiMxQzI1MzAiLz48cmVjdCB4PSI0MzIiIHk9IjM4NCIgd2lkdGg9Ijk2IiBoZWlnaHQ9IjI0IiBmaWxsPSIjRTZFRUY4IiBzdHJva2U9IiMxQzI1MzAiLz48cmVjdCB4PSI1MjgiIHk9IjM4NCIgd2lkdGg9IjI3NiIgaGVpZ2h0PSIyNCIgZmlsbD0iI0UyRjFFNyIgc3Ryb2tlPSIjMUMyNTMwIi8+PC9zdmc+" alt="Une adresse IPv4 192.168.1.2 décomposée en quatre octets binaires, une adresse IPv6 en huit groupes hexadécimaux dont le groupe ec1f traduit en quatre groupes de 4 bits, et les trois champs d'un nombre flottant." width="900" height="420">
-      <figcaption>Une même information, trois écritures : décimal, binaire et hexadécimal.</figcaption>
+      <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5MDAiIGhlaWdodD0iNTYwIj48cmVjdCB3aWR0aD0iOTAwIiBoZWlnaHQ9IjU2MCIgZmlsbD0iI2ZmZiIvPjxnIHN0cm9rZT0iI0QzRDhENSIgc3Ryb2tlLXdpZHRoPSIxIj48bGluZSB4MT0iMCIgeTE9IjAiIHgyPSIwIiB5Mj0iNTYwIi8+PGxpbmUgeDE9IjQwIiB5MT0iMCIgeDI9IjQwIiB5Mj0iNTYwIi8+PGxpbmUgeDE9IjgwIiB5MT0iMCIgeDI9IjgwIiB5Mj0iNTYwIi8+PGxpbmUgeDE9IjEyMCIgeTE9IjAiIHgyPSIxMjAiIHkyPSI1NjAiLz48bGluZSB4MT0iMTYwIiB5MT0iMCIgeDI9IjE2MCIgeTI9IjU2MCIvPjxsaW5lIHgxPSIyMDAiIHkxPSIwIiB4Mj0iMjAwIiB5Mj0iNTYwIi8+PGxpbmUgeDE9IjI0MCIgeTE9IjAiIHgyPSIyNDAiIHkyPSI1NjAiLz48bGluZSB4MT0iMjgwIiB5MT0iMCIgeDI9IjI4MCIgeTI9IjU2MCIvPjxsaW5lIHgxPSIzMjAiIHkxPSIwIiB4Mj0iMzIwIiB5Mj0iNTYwIi8+PGxpbmUgeDE9IjM2MCIgeTE9IjAiIHgyPSIzNjAiIHkyPSI1NjAiLz48bGluZSB4MT0iNDAwIiB5MT0iMCIgeDI9IjQwMCIgeTI9IjU2MCIvPjxsaW5lIHgxPSI0NDAiIHkxPSIwIiB4Mj0iNDQwIiB5Mj0iNTYwIi8+PGxpbmUgeDE9IjQ4MCIgeTE9IjAiIHgyPSI0ODAiIHkyPSI1NjAiLz48bGluZSB4MT0iNTIwIiB5MT0iMCIgeDI9IjUyMCIgeTI9IjU2MCIvPjxsaW5lIHgxPSI1NjAiIHkxPSIwIiB4Mj0iNTYwIiB5Mj0iNTYwIi8+PGxpbmUgeDE9IjYwMCIgeTE9IjAiIHgyPSI2MDAiIHkyPSI1NjAiLz48bGluZSB4MT0iNjQwIiB5MT0iMCIgeDI9IjY0MCIgeTI9IjU2MCIvPjxsaW5lIHgxPSI2ODAiIHkxPSIwIiB4Mj0iNjgwIiB5Mj0iNTYwIi8+PGxpbmUgeDE9IjcyMCIgeTE9IjAiIHgyPSI3MjAiIHkyPSI1NjAiLz48bGluZSB4MT0iNzYwIiB5MT0iMCIgeDI9Ijc2MCIgeTI9IjU2MCIvPjxsaW5lIHgxPSI4MDAiIHkxPSIwIiB4Mj0iODAwIiB5Mj0iNTYwIi8+PGxpbmUgeDE9Ijg0MCIgeTE9IjAiIHgyPSI4NDAiIHkyPSI1NjAiLz48bGluZSB4MT0iODgwIiB5MT0iMCIgeDI9Ijg4MCIgeTI9IjU2MCIvPjxsaW5lIHgxPSIwIiB5MT0iMCIgeDI9IjkwMCIgeTI9IjAiLz48bGluZSB4MT0iMCIgeTE9IjQwIiB4Mj0iOTAwIiB5Mj0iNDAiLz48bGluZSB4MT0iMCIgeTE9IjgwIiB4Mj0iOTAwIiB5Mj0iODAiLz48bGluZSB4MT0iMCIgeTE9IjEyMCIgeDI9IjkwMCIgeTI9IjEyMCIvPjxsaW5lIHgxPSIwIiB5MT0iMTYwIiB4Mj0iOTAwIiB5Mj0iMTYwIi8+PGxpbmUgeDE9IjAiIHkxPSIyMDAiIHgyPSI5MDAiIHkyPSIyMDAiLz48bGluZSB4MT0iMCIgeTE9IjI0MCIgeDI9IjkwMCIgeTI9IjI0MCIvPjxsaW5lIHgxPSIwIiB5MT0iMjgwIiB4Mj0iOTAwIiB5Mj0iMjgwIi8+PGxpbmUgeDE9IjAiIHkxPSIzMjAiIHgyPSI5MDAiIHkyPSIzMjAiLz48bGluZSB4MT0iMCIgeTE9IjM2MCIgeDI9IjkwMCIgeTI9IjM2MCIvPjxsaW5lIHgxPSIwIiB5MT0iNDAwIiB4Mj0iOTAwIiB5Mj0iNDAwIi8+PGxpbmUgeDE9IjAiIHkxPSI0NDAiIHgyPSI5MDAiIHkyPSI0NDAiLz48bGluZSB4MT0iMCIgeTE9IjQ4MCIgeDI9IjkwMCIgeTI9IjQ4MCIvPjxsaW5lIHgxPSIwIiB5MT0iNTIwIiB4Mj0iOTAwIiB5Mj0iNTIwIi8+PGxpbmUgeDE9IjAiIHkxPSI1NjAiIHgyPSI5MDAiIHkyPSI1NjAiLz48L2c+PHJlY3QgeD0iLjUiIHk9Ii41IiB3aWR0aD0iODk5IiBoZWlnaHQ9IjU1OSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjQTVBREFBIi8+PHRleHQgeD0iNDUwIiB5PSIzMDAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjI2IiBmaWxsPSIjQTVBREFBIj5Gb25kIGR1IGRvY3VtZW50IHLDqXBvbnNlIChpbWFnZSBkdSBEUik8L3RleHQ+PC9zdmc+" alt="[Description de l'illustration du système]" width="900" height="560">
+      <figcaption>[Légende de l'illustration.]</figcaption>
     </figure>
     <div class="home-facts">
-      <div><b>3 parties</b><span>IPv4, IPv6, nombres flottants</span></div>
+      <div><b>2 parties</b><span>[nature du parcours]</span></div>
       <div><b>1 h 00</b><span>durée conseillée, qui fixe la pondération</span></div>
-      <div><b>3 documents</b><span>DP1, DT1 et DT2 consultables</span></div>
-      <div><b>0 tracé</b><span>uniquement des réponses saisies</span></div>
+      <div><b>2 documents</b><span>DP1 et DT1 consultables</span></div>
+      <div><b>1 tracé</b><span>sur document réponse, auto-évalué</span></div>
     </div>
     <h2 class="home-choose">Choisis ton mode de travail</h2>
     <div class="modes">
@@ -507,7 +482,7 @@ body:not(.mode-training) .only-training,body:not(.mode-exam) .only-exam{display:
       </article>
       <article class="mode-card exam">
         <div class="mc-head"><span class="mc-tag">Mode 2</span><h3>Mode examen</h3></div>
-        <p class="mc-lead">Pour se placer dans les conditions d'une évaluation.</p>
+        <p class="mc-lead">Pour se placer dans les conditions de l'épreuve.</p>
         <ul><li>Aucune correction et aucune note pendant la composition ; les réponses restent modifiables.</li>
           <li>Le chronomètre tourne, à comparer à la durée conseillée.</li>
           <li>En fin de sujet, le bouton « J'ai fini, je fais corriger ma copie » dévoile d'un coup les corrections, les notes par partie et la note globale.</li></ul>
@@ -521,36 +496,41 @@ body:not(.mode-training) .only-training,body:not(.mode-exam) .only-exam{display:
 <main class="page">
   <section class="print-only print-summary">
     <p>Élève : <span class="print-nom"></span> | Copie imprimée le <span class="print-date"></span></p>
-    <p>Mode : <span class="print-mode"></span> | Temps de rédaction : <strong class="print-time"></strong> (durée conseillée : 1 h 00)</p>
+    <p>Mode : <span class="print-mode"></span> | Temps de rédaction : <strong class="print-time"></strong> (durée conseillée : [1 h 00])</p>
     <p class="print-note-line">Note finale pondérée : <strong class="final-note"></strong></p>
     <p class="print-nograde">Copie non corrigée : les corrections et la note n'apparaissent qu'après la remise de la copie en mode examen.</p>
   </section>
 
   <header class="cartouche">
     <div class="title">
-      <h1>Binaire, hexadécimal, IPv4 et IPv6</h1>
-      <p>18 questions notées (unités comprises), réparties en 3 parties pondérées par leur durée.</p></div>
+      <h1>[Titre de l'exercice]</h1>
+      <p>[n] questions notées (unités comprises) et [n] tracés auto-évalués, répartis en [n] parties pondérées par leur durée.</p></div>
     <div class="nom"><label for="nom-eleve">Nom et prénom</label><input id="nom-eleve" type="text" autocomplete="name"></div>
   </header>
 
   <div class="consignes">
     <p class="only-training"><strong>Mode entraînement.</strong> Réponds dans chaque champ puis clique sur « Valider » : une réponse validée est définitive et sa correction s'affiche aussitôt.</p>
     <p class="only-exam"><strong>Mode examen.</strong> Compose tout le sujet sans correction ni note : tes réponses restent modifiables jusqu'au bout. Le bouton « J'ai fini, je fais corriger ma copie », en fin de sujet, dévoile d'un coup les corrections, les notes par partie et la note globale.</p>
-    <p><strong>Les unités sont notées.</strong> Quand une réponse porte une unité (le bit ou l'octet), la valeur vaut la moitié des points et l'unité l'autre moitié : une valeur juste écrite sans unité, ou avec une unité fausse, ne rapporte que la moitié des points.</p>
-    <p>Les documents de présentation (DP) et techniques (DT) s'ouvrent avec les onglets sur le bord droit, ou avec les boutons des en-têtes de question.</p>
+    <p><strong>Les unités sont notées.</strong> Pour toute question numérique, la valeur vaut la moitié des points et l'unité l'autre moitié : une valeur juste écrite sans unité, ou avec une unité fausse, ne rapporte qu'un demi-point.</p>
+    <p>Les dossiers de présentation (DP) et technique (DT) s'ouvrent avec les onglets sur le bord droit, ou avec les boutons des en-têtes de question.</p>
+    <p><strong>Les tracés comptent aussi.</strong> Quand la correction du tracé s'affiche, tu t'attribues toi-même les points à l'aide d'une grille de critères.</p>
     <p><strong>Barème pondéré par la durée conseillée</strong> : chaque partie est notée sur 20, puis pèse au prorata de son temps. Le récapitulatif de fin de sujet donne le détail partie par partie.</p>
   </div>
 
+  <!-- PARTIE : dupliquer ; le numéro doit correspondre à "part" dans __QCFG__/__SKCFG__ -->
   <section class="part" id="partie-1" aria-labelledby="t-partie-1">
     <header class="part-head"><div class="part-num" aria-hidden="true">1</div>
-      <div><h2 id="t-partie-1"><span class="sr-only">Partie 1 : </span>Adresses IPv4 : binaire et décimal</h2>
-        <div class="duree">Durée conseillée : 15 min · Barème : 8 points, soit 25,0 % de la note</div></div></header>
+      <div><h2 id="t-partie-1"><span class="sr-only">Partie 1 : </span>Titre de la première partie</h2>
+        <div class="duree">Durée conseillée : 20 min · Barème : 2 points, soit 33,3 % de la note</div></div></header>
     <div class="part-body">
-      <p>Une adresse IPv4 s'écrit en <strong>4 parties</strong> séparées par des points. Chaque partie est un <strong>octet</strong>, qui va de <code>0</code> à <code>255</code> en décimal : la plage totale va de <code>0.0.0.0</code> à <code>255.255.255.255</code>.</p>
-      <div class="qbar" role="group" aria-label="Q1.1–1.3"><div class="qb-num">Q1.1–1.3</div><div class="qb-docs">Documents à consulter : <button type="button" class="doc-chip" data-doc="DP1" aria-pressed="false">DP1</button> <button type="button" class="doc-chip" data-doc="DT1" aria-pressed="false">DT1</button></div><div class="qb-ans">Répondre : ci-dessous</div><div class="qb-title">Réseau d'un particulier : <code>192.168.1.x</code> (x = numéro d'un appareil)</div></div>
+      <p>[Mise en situation de la partie.]</p>
+      <div class="qbar" role="group" aria-label="Q1.1"><div class="qb-num">Q1.1</div><div class="qb-docs">Documents à consulter : <button type="button" class="doc-chip" data-doc="DT1" aria-pressed="false">DT1</button></div><div class="qb-ans">Répondre : ci-dessous</div></div>
+      <div class="data"><p class="data-title">Données</p><ul><li>[Donnée 1]</li><li>[Donnée 2]</li></ul></div>
+      
+        <!-- QUESTION : dupliquer ce bloc. id + data-q = clé dans __QCFG__ -->
         <div class="q" id="q1_1" data-q="q1_1">
-          <p class="q-stem"><span class="q-num">Q1.1</span> <strong>« x » peut prendre une valeur de 0 à 255. Sur combien de bits est-il codé en binaire ?</strong></p>
-          <p class="q-hint" id="h-q1_1">Nombre entier. Saisis la valeur <strong>avec son unité</strong> : l'unité vaut la moitié des points de la question.</p>
+          <p class="q-stem"><span class="q-num">Q1.1</span> <strong>Énoncé de la question numérique.</strong></p>
+          <p class="q-hint" id="h-q1_1">Arrondir au centième. Saisis la valeur <strong>avec son unité</strong> : l'unité vaut la moitié des points de la question.</p>
           <div class="q-row">
             <input type="text" class="q-input" id="in-q1_1" aria-label="Réponse Q1.1" aria-describedby="h-q1_1" autocomplete="off" autocapitalize="off" spellcheck="false">
             <button type="button" class="btn btn-validate">Valider</button>
@@ -560,13 +540,15 @@ body:not(.mode-training) .only-training,body:not(.mode-exam) .only-exam{display:
           <p class="q-msg" role="alert"></p>
           <div class="q-expl" hidden>
             <p class="q-unit-msg" hidden></p>
-            <p class="q-expected"><span>Réponse attendue :</span> 8 bits (soit 1 octet)</p>
-            <div class="q-why"><p>x peut prendre <strong>256 valeurs</strong> distinctes (de 0 à 255). Avec n bits on code 2<sup>n</sup> valeurs : 2<sup>7</sup> = 128 ne suffit pas, 2<sup>8</sup> = 256 convient exactement.</p><p>Il faut donc <strong>8 bits</strong>, c'est-à-dire un octet.</p></div>
+            <p class="q-expected"><span>Réponse attendue :</span> m = 84,80 kg</p>
+            <div class="q-why"><p>Démarche détaillée, pas seulement le résultat.</p></div>
           </div>
         </div>
+      
+        <!-- QUESTION : dupliquer ce bloc. id + data-q = clé dans __QCFG__ -->
         <div class="q" id="q1_2" data-q="q1_2">
-          <p class="q-stem"><span class="q-num">Q1.2</span> <strong>L'adresse de mon ordinateur est <code>192.168.1.2</code>. Écris cette adresse en binaire.</strong></p>
-          <p class="q-hint" id="h-q1_2">Chaque octet sur 8 bits, zéros de tête compris. Les points et les espaces sont facultatifs.</p>
+          <p class="q-stem"><span class="q-num">Q1.2</span> <strong>Énoncé de la question à réponse rédigée courte.</strong></p>
+          <p class="q-hint" id="h-q1_2">Réponse courte en toutes lettres.</p>
           <div class="q-row">
             <input type="text" class="q-input" id="in-q1_2" aria-label="Réponse Q1.2" aria-describedby="h-q1_2" autocomplete="off" autocapitalize="off" spellcheck="false">
             <button type="button" class="btn btn-validate">Valider</button>
@@ -576,90 +558,8 @@ body:not(.mode-training) .only-training,body:not(.mode-exam) .only-exam{display:
           <p class="q-msg" role="alert"></p>
           <div class="q-expl" hidden>
             <p class="q-unit-msg" hidden></p>
-            <p class="q-expected"><span>Réponse attendue :</span> <code>11000000.10101000.00000001.00000010</code></p>
-            <div class="q-why"><p>On convertit chaque octet séparément, en décomposant en puissances de 2 (128, 64, 32, 16, 8, 4, 2, 1) :</p><ul><li>192 = 128 + 64 → <code>11000000</code></li><li>168 = 128 + 32 + 8 → <code>10101000</code></li><li>1 → <code>00000001</code></li><li>2 → <code>00000010</code></li></ul><p>Chaque octet garde ses 8 bits : les zéros de tête font partie de l'adresse.</p></div>
-          </div>
-        </div>
-        <div class="q" id="q1_3" data-q="q1_3">
-          <p class="q-stem"><span class="q-num">Q1.3</span> <strong>Combien d'appareils différents peut-on relier sur ce réseau <code>192.168.1.x</code> ?</strong></p>
-          <p class="q-hint" id="h-q1_3">Nombre entier.</p>
-          <div class="q-row">
-            <input type="text" class="q-input" id="in-q1_3" aria-label="Réponse Q1.3" aria-describedby="h-q1_3" autocomplete="off" autocapitalize="off" spellcheck="false">
-            <button type="button" class="btn btn-validate">Valider</button>
-            <span class="q-status" aria-live="polite"></span>
-            <span class="print-only pstat">Non validée : comptée fausse</span>
-          </div>
-          <p class="q-msg" role="alert"></p>
-          <div class="q-expl" hidden>
-            <p class="q-unit-msg" hidden></p>
-            <p class="q-expected"><span>Réponse attendue :</span> 256 (254 en pratique)</p>
-            <div class="q-why"><p>x est codé sur 8 bits : 2<sup>8</sup> = <strong>256</strong> valeurs possibles, donc 256 adresses.</p><p>Précision réseau : deux adresses sont réservées (l'adresse du réseau <code>.0</code> et l'adresse de diffusion <code>.255</code>), soit <strong>254</strong> appareils réellement adressables. Les deux réponses sont acceptées.</p></div>
-          </div>
-        </div>
-      <div class="qbar" role="group" aria-label="Q1.4–1.5"><div class="qb-num">Q1.4–1.5</div><div class="qb-docs">Documents à consulter : <button type="button" class="doc-chip" data-doc="DT1" aria-pressed="false">DT1</button></div><div class="qb-ans">Répondre : ci-dessous</div><div class="qb-title">Réseau d'une petite entreprise : <code>128.16.x.y</code></div></div>
-        <div class="q" id="q1_4" data-q="q1_4">
-          <p class="q-stem"><span class="q-num">Q1.4</span> <strong>« x » et « y » vont chacun de 0 à 255. Sur combien de bits au total la partie « x.y » de l'adresse est-elle codée ?</strong></p>
-          <p class="q-hint" id="h-q1_4">Nombre entier. Saisis la valeur <strong>avec son unité</strong> : l'unité vaut la moitié des points de la question.</p>
-          <div class="q-row">
-            <input type="text" class="q-input" id="in-q1_4" aria-label="Réponse Q1.4" aria-describedby="h-q1_4" autocomplete="off" autocapitalize="off" spellcheck="false">
-            <button type="button" class="btn btn-validate">Valider</button>
-            <span class="q-status" aria-live="polite"></span>
-            <span class="print-only pstat">Non validée : comptée fausse</span>
-          </div>
-          <p class="q-msg" role="alert"></p>
-          <div class="q-expl" hidden>
-            <p class="q-unit-msg" hidden></p>
-            <p class="q-expected"><span>Réponse attendue :</span> 16 bits (soit 2 octets)</p>
-            <div class="q-why"><p>x occupe 8 bits et y occupe 8 bits : 8 + 8 = <strong>16 bits</strong>.</p></div>
-          </div>
-        </div>
-        <div class="q" id="q1_5" data-q="q1_5">
-          <p class="q-stem"><span class="q-num">Q1.5</span> <strong>Combien d'appareils différents peut-on relier sur ce réseau <code>128.16.x.y</code> ?</strong></p>
-          <p class="q-hint" id="h-q1_5">Nombre entier. Les espaces entre milliers sont acceptés.</p>
-          <div class="q-row">
-            <input type="text" class="q-input" id="in-q1_5" aria-label="Réponse Q1.5" aria-describedby="h-q1_5" autocomplete="off" autocapitalize="off" spellcheck="false">
-            <button type="button" class="btn btn-validate">Valider</button>
-            <span class="q-status" aria-live="polite"></span>
-            <span class="print-only pstat">Non validée : comptée fausse</span>
-          </div>
-          <p class="q-msg" role="alert"></p>
-          <div class="q-expl" hidden>
-            <p class="q-unit-msg" hidden></p>
-            <p class="q-expected"><span>Réponse attendue :</span> 65 536 (65 534 en pratique)</p>
-            <div class="q-why"><p>16 bits donnent 2<sup>16</sup> = 256 × 256 = <strong>65 536</strong> combinaisons.</p><p>En retirant l'adresse du réseau et l'adresse de diffusion, il reste <strong>65 534</strong> appareils adressables. Les deux réponses sont acceptées.</p></div>
-          </div>
-        </div>
-      <div class="qbar" role="group" aria-label="Q1.6–1.7"><div class="qb-num">Q1.6–1.7</div><div class="qb-docs">Documents à consulter : <button type="button" class="doc-chip" data-doc="DT1" aria-pressed="false">DT1</button></div><div class="qb-ans">Répondre : ci-dessous</div><div class="qb-title">Généralisation : <code>w.x.y.z</code>, chaque octet de 0 à 255</div></div>
-        <div class="q" id="q1_6" data-q="q1_6">
-          <p class="q-stem"><span class="q-num">Q1.6</span> <strong>Si les 4 octets <code>w.x.y.z</code> peuvent tous être choisis, sur combien de bits l'adresse complète est-elle codée ?</strong></p>
-          <p class="q-hint" id="h-q1_6">Nombre entier. Saisis la valeur <strong>avec son unité</strong> : l'unité vaut la moitié des points de la question.</p>
-          <div class="q-row">
-            <input type="text" class="q-input" id="in-q1_6" aria-label="Réponse Q1.6" aria-describedby="h-q1_6" autocomplete="off" autocapitalize="off" spellcheck="false">
-            <button type="button" class="btn btn-validate">Valider</button>
-            <span class="q-status" aria-live="polite"></span>
-            <span class="print-only pstat">Non validée : comptée fausse</span>
-          </div>
-          <p class="q-msg" role="alert"></p>
-          <div class="q-expl" hidden>
-            <p class="q-unit-msg" hidden></p>
-            <p class="q-expected"><span>Réponse attendue :</span> 32 bits (soit 4 octets)</p>
-            <div class="q-why"><p>4 octets × 8 bits = <strong>32 bits</strong> : c'est la taille d'une adresse IPv4.</p></div>
-          </div>
-        </div>
-        <div class="q" id="q1_7" data-q="q1_7">
-          <p class="q-stem"><span class="q-num">Q1.7</span> <strong>Combien d'appareils différents peut-on relier sur Internet avec la norme IPv4 ?</strong></p>
-          <p class="q-hint" id="h-q1_7">Donne le nombre entier exact. Les espaces entre milliers sont acceptés.</p>
-          <div class="q-row">
-            <input type="text" class="q-input" id="in-q1_7" aria-label="Réponse Q1.7" aria-describedby="h-q1_7" autocomplete="off" autocapitalize="off" spellcheck="false">
-            <button type="button" class="btn btn-validate">Valider</button>
-            <span class="q-status" aria-live="polite"></span>
-            <span class="print-only pstat">Non validée : comptée fausse</span>
-          </div>
-          <p class="q-msg" role="alert"></p>
-          <div class="q-expl" hidden>
-            <p class="q-unit-msg" hidden></p>
-            <p class="q-expected"><span>Réponse attendue :</span> 2<sup>32</sup> = 4 294 967 296</p>
-            <div class="q-why"><p>32 bits donnent 2<sup>32</sup> = 256<sup>4</sup> = <strong>4 294 967 296</strong> adresses, soit environ 4,3 milliards.</p><p>C'est moins d'une adresse par habitant de la planète, alors que chacun possède plusieurs appareils connectés : d'où le passage à IPv6.</p></div>
+            <p class="q-expected"><span>Réponse attendue :</span> Réducteur</p>
+            <div class="q-why"><p>Justification du composant attendu.</p></div>
           </div>
         </div>
     </div>
@@ -667,14 +567,15 @@ body:not(.mode-training) .only-training,body:not(.mode-exam) .only-exam{display:
 
   <section class="part" id="partie-2" aria-labelledby="t-partie-2">
     <header class="part-head"><div class="part-num" aria-hidden="true">2</div>
-      <div><h2 id="t-partie-2"><span class="sr-only">Partie 2 : </span>Adresses IPv6 : hexadécimal, binaire et décimal</h2>
-        <div class="duree">Durée conseillée : 20 min · Barème : 10 points, soit 33,3 % de la note</div></div></header>
+      <div><h2 id="t-partie-2"><span class="sr-only">Partie 2 : </span>Titre de la seconde partie</h2>
+        <div class="duree">Durée conseillée : 40 min · Barème : 5 points, soit 66,7 % de la note</div></div></header>
     <div class="part-body">
-      <p>Une adresse IPv6 s'écrit en <strong>8 parties</strong> séparées par des « : ». Chaque partie est écrite en hexadécimal, de <code>0000</code> à <code>FFFF</code>. Exemple : <code>2001:0db8:0000:85a3:0010:0a0b:8001:ec1f</code>.</p>
-      <div class="qbar" role="group" aria-label="Q2.1–2.3"><div class="qb-num">Q2.1–2.3</div><div class="qb-docs">Documents à consulter : <button type="button" class="doc-chip" data-doc="DT1" aria-pressed="false">DT1</button></div><div class="qb-ans">Répondre : ci-dessous</div><div class="qb-title">Préliminaires : le chiffre hexadécimal <code>E</code></div></div>
+      <div class="qbar" role="group" aria-label="Q2.1"><div class="qb-num">Q2.1</div><div class="qb-docs">Documents à consulter : <button type="button" class="doc-chip" data-doc="DT1" aria-pressed="false">DT1</button></div><div class="qb-ans">Répondre : ci-dessous</div></div>
+      
+        <!-- QUESTION : dupliquer ce bloc. id + data-q = clé dans __QCFG__ -->
         <div class="q" id="q2_1" data-q="q2_1">
-          <p class="q-stem"><span class="q-num">Q2.1</span> <strong>Convertis le chiffre hexadécimal <code>E</code> en décimal.</strong></p>
-          <p class="q-hint" id="h-q2_1">Nombre entier.</p>
+          <p class="q-stem"><span class="q-num">Q2.1</span> <strong>Énoncé de la question à référence catalogue.</strong></p>
+          <p class="q-hint" id="h-q2_1">Recopie la référence du catalogue.</p>
           <div class="q-row">
             <input type="text" class="q-input" id="in-q2_1" aria-label="Réponse Q2.1" aria-describedby="h-q2_1" autocomplete="off" autocapitalize="off" spellcheck="false">
             <button type="button" class="btn btn-validate">Valider</button>
@@ -684,13 +585,15 @@ body:not(.mode-training) .only-training,body:not(.mode-exam) .only-exam{display:
           <p class="q-msg" role="alert"></p>
           <div class="q-expl" hidden>
             <p class="q-unit-msg" hidden></p>
-            <p class="q-expected"><span>Réponse attendue :</span> 14</p>
-            <div class="q-why"><p>En hexadécimal, après 9 on continue avec des lettres : A = 10, B = 11, C = 12, D = 13, <strong>E = 14</strong>, F = 15.</p></div>
+            <p class="q-expected"><span>Réponse attendue :</span> KN 70/66/4 K (n° 117584)</p>
+            <div class="q-why"><p>Critère de choix et justification.</p></div>
           </div>
         </div>
+      
+        <!-- QUESTION : dupliquer ce bloc. id + data-q = clé dans __QCFG__ -->
         <div class="q" id="q2_2" data-q="q2_2">
-          <p class="q-stem"><span class="q-num">Q2.2</span> <strong>Convertis ce même chiffre <code>E</code> en binaire.</strong></p>
-          <p class="q-hint" id="h-q2_2">Écris uniquement les bits ; les espaces sont facultatifs.</p>
+          <p class="q-stem"><span class="q-num">Q2.2</span> <strong>Énoncé de la question de conclusion.</strong></p>
+          <p class="q-hint" id="h-q2_2">Commence ta réponse par « oui » ou « non ».</p>
           <div class="q-row">
             <input type="text" class="q-input" id="in-q2_2" aria-label="Réponse Q2.2" aria-describedby="h-q2_2" autocomplete="off" autocapitalize="off" spellcheck="false">
             <button type="button" class="btn btn-validate">Valider</button>
@@ -700,181 +603,67 @@ body:not(.mode-training) .only-training,body:not(.mode-exam) .only-exam{display:
           <p class="q-msg" role="alert"></p>
           <div class="q-expl" hidden>
             <p class="q-unit-msg" hidden></p>
-            <p class="q-expected"><span>Réponse attendue :</span> <code>1110</code></p>
-            <div class="q-why"><p>E = 14 = 8 + 4 + 2, soit <code>1110</code> en binaire (sur 4 bits).</p></div>
+            <p class="q-expected"><span>Réponse attendue :</span> Oui</p>
+            <div class="q-why"><p>Comparaison chiffrée qui fonde la conclusion.</p></div>
           </div>
         </div>
-        <div class="q" id="q2_3" data-q="q2_3">
-          <p class="q-stem"><span class="q-num">Q2.3</span> <strong>Combien faut-il de bits pour coder un chiffre hexadécimal ?</strong></p>
-          <p class="q-hint" id="h-q2_3">Nombre entier. Saisis la valeur <strong>avec son unité</strong> : l'unité vaut la moitié des points de la question.</p>
-          <div class="q-row">
-            <input type="text" class="q-input" id="in-q2_3" aria-label="Réponse Q2.3" aria-describedby="h-q2_3" autocomplete="off" autocapitalize="off" spellcheck="false">
-            <button type="button" class="btn btn-validate">Valider</button>
-            <span class="q-status" aria-live="polite"></span>
-            <span class="print-only pstat">Non validée : comptée fausse</span>
+      
+        <!-- TRACÉ : id = clé dans __SKCFG__ ; le fond est une image en data URI -->
+        <div class="sketch" data-sketch="sk_q2_3" id="sk_q2_3">
+          <p class="q-stem"><span class="q-num">Q2.3</span> <strong>Énoncé du tracé à réaliser sur le document réponse.</strong></p>
+          <div class="sk-layout">
+            <div class="sk-main">
+              <div class="sk-toolbar" role="toolbar" aria-label="Outils de tracé Q2.3">
+                <button type="button" data-tool="pen" aria-pressed="true">Crayon</button>
+                <button type="button" data-tool="line" aria-pressed="false">Ligne</button>
+                <button type="button" data-tool="arrow" aria-pressed="false">Flèche</button>
+                <button type="button" data-tool="text" aria-pressed="false">Texte</button>
+                <button type="button" data-tool="erase" aria-pressed="false">Gomme</button>
+                <span class="sep"></span>
+                <button type="button" class="sw" data-color="#1F5FA8" aria-label="Couleur bleue" aria-pressed="true" style="background:#1F5FA8"></button>
+                <button type="button" class="sw" data-color="#1B7A43" aria-label="Couleur verte" aria-pressed="false" style="background:#1B7A43"></button>
+                <button type="button" class="sw" data-color="#1C2530" aria-label="Couleur noire" aria-pressed="false" style="background:#1C2530"></button>
+                <span class="sep"></span>
+                <span class="tb-group"><span class="tb-lab">Trait</span>
+                  <button type="button" data-width="fin" aria-pressed="false">Fin</button>
+                  <button type="button" data-width="moyen" aria-pressed="true">Moyen</button>
+                  <button type="button" data-width="epais" aria-pressed="false">Épais</button></span>
+                <span class="sep"></span>
+                <span class="tb-group"><span class="tb-lab">Zoom</span>
+                  <button type="button" data-zoom="out" aria-label="Réduire le zoom">−</button>
+                  <span class="zoom-val">100 %</span>
+                  <button type="button" data-zoom="in" aria-label="Agrandir le zoom">+</button>
+                  <button type="button" data-zoom="reset">Ajuster</button></span>
+                <span class="sep"></span>
+                <button type="button" data-act="undo">Annuler</button>
+                <button type="button" data-act="clear">Tout effacer</button>
+                <span class="spacer"></span>
+                <button type="button" class="btn-drprint" data-act="drprint">Imprimer les DR</button>
+                <button type="button" data-act="full" aria-pressed="false">Plein écran</button>
+              </div>
+              <div class="sk-stage"><img class="sk-bg" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5MDAiIGhlaWdodD0iNTYwIj48cmVjdCB3aWR0aD0iOTAwIiBoZWlnaHQ9IjU2MCIgZmlsbD0iI2ZmZiIvPjxnIHN0cm9rZT0iI0QzRDhENSIgc3Ryb2tlLXdpZHRoPSIxIj48bGluZSB4MT0iMCIgeTE9IjAiIHgyPSIwIiB5Mj0iNTYwIi8+PGxpbmUgeDE9IjQwIiB5MT0iMCIgeDI9IjQwIiB5Mj0iNTYwIi8+PGxpbmUgeDE9IjgwIiB5MT0iMCIgeDI9IjgwIiB5Mj0iNTYwIi8+PGxpbmUgeDE9IjEyMCIgeTE9IjAiIHgyPSIxMjAiIHkyPSI1NjAiLz48bGluZSB4MT0iMTYwIiB5MT0iMCIgeDI9IjE2MCIgeTI9IjU2MCIvPjxsaW5lIHgxPSIyMDAiIHkxPSIwIiB4Mj0iMjAwIiB5Mj0iNTYwIi8+PGxpbmUgeDE9IjI0MCIgeTE9IjAiIHgyPSIyNDAiIHkyPSI1NjAiLz48bGluZSB4MT0iMjgwIiB5MT0iMCIgeDI9IjI4MCIgeTI9IjU2MCIvPjxsaW5lIHgxPSIzMjAiIHkxPSIwIiB4Mj0iMzIwIiB5Mj0iNTYwIi8+PGxpbmUgeDE9IjM2MCIgeTE9IjAiIHgyPSIzNjAiIHkyPSI1NjAiLz48bGluZSB4MT0iNDAwIiB5MT0iMCIgeDI9IjQwMCIgeTI9IjU2MCIvPjxsaW5lIHgxPSI0NDAiIHkxPSIwIiB4Mj0iNDQwIiB5Mj0iNTYwIi8+PGxpbmUgeDE9IjQ4MCIgeTE9IjAiIHgyPSI0ODAiIHkyPSI1NjAiLz48bGluZSB4MT0iNTIwIiB5MT0iMCIgeDI9IjUyMCIgeTI9IjU2MCIvPjxsaW5lIHgxPSI1NjAiIHkxPSIwIiB4Mj0iNTYwIiB5Mj0iNTYwIi8+PGxpbmUgeDE9IjYwMCIgeTE9IjAiIHgyPSI2MDAiIHkyPSI1NjAiLz48bGluZSB4MT0iNjQwIiB5MT0iMCIgeDI9IjY0MCIgeTI9IjU2MCIvPjxsaW5lIHgxPSI2ODAiIHkxPSIwIiB4Mj0iNjgwIiB5Mj0iNTYwIi8+PGxpbmUgeDE9IjcyMCIgeTE9IjAiIHgyPSI3MjAiIHkyPSI1NjAiLz48bGluZSB4MT0iNzYwIiB5MT0iMCIgeDI9Ijc2MCIgeTI9IjU2MCIvPjxsaW5lIHgxPSI4MDAiIHkxPSIwIiB4Mj0iODAwIiB5Mj0iNTYwIi8+PGxpbmUgeDE9Ijg0MCIgeTE9IjAiIHgyPSI4NDAiIHkyPSI1NjAiLz48bGluZSB4MT0iODgwIiB5MT0iMCIgeDI9Ijg4MCIgeTI9IjU2MCIvPjxsaW5lIHgxPSIwIiB5MT0iMCIgeDI9IjkwMCIgeTI9IjAiLz48bGluZSB4MT0iMCIgeTE9IjQwIiB4Mj0iOTAwIiB5Mj0iNDAiLz48bGluZSB4MT0iMCIgeTE9IjgwIiB4Mj0iOTAwIiB5Mj0iODAiLz48bGluZSB4MT0iMCIgeTE9IjEyMCIgeDI9IjkwMCIgeTI9IjEyMCIvPjxsaW5lIHgxPSIwIiB5MT0iMTYwIiB4Mj0iOTAwIiB5Mj0iMTYwIi8+PGxpbmUgeDE9IjAiIHkxPSIyMDAiIHgyPSI5MDAiIHkyPSIyMDAiLz48bGluZSB4MT0iMCIgeTE9IjI0MCIgeDI9IjkwMCIgeTI9IjI0MCIvPjxsaW5lIHgxPSIwIiB5MT0iMjgwIiB4Mj0iOTAwIiB5Mj0iMjgwIi8+PGxpbmUgeDE9IjAiIHkxPSIzMjAiIHgyPSI5MDAiIHkyPSIzMjAiLz48bGluZSB4MT0iMCIgeTE9IjM2MCIgeDI9IjkwMCIgeTI9IjM2MCIvPjxsaW5lIHgxPSIwIiB5MT0iNDAwIiB4Mj0iOTAwIiB5Mj0iNDAwIi8+PGxpbmUgeDE9IjAiIHkxPSI0NDAiIHgyPSI5MDAiIHkyPSI0NDAiLz48bGluZSB4MT0iMCIgeTE9IjQ4MCIgeDI9IjkwMCIgeTI9IjQ4MCIvPjxsaW5lIHgxPSIwIiB5MT0iNTIwIiB4Mj0iOTAwIiB5Mj0iNTIwIi8+PGxpbmUgeDE9IjAiIHkxPSI1NjAiIHgyPSI5MDAiIHkyPSI1NjAiLz48L2c+PHJlY3QgeD0iLjUiIHk9Ii41IiB3aWR0aD0iODk5IiBoZWlnaHQ9IjU1OSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjQTVBREFBIi8+PHRleHQgeD0iNDUwIiB5PSIzMDAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjI2IiBmaWxsPSIjQTVBREFBIj5Gb25kIGR1IGRvY3VtZW50IHLDqXBvbnNlIChpbWFnZSBkdSBEUik8L3RleHQ+PC9zdmc+" width="900" height="560" alt="" hidden>
+                <canvas role="img" aria-label="Zone de tracé sur le document réponse Q2.3"></canvas></div>
+              <div class="sk-foot">
+                <button type="button" class="btn btn-sketch">Valider mon tracé</button>
+                <label class="sk-corr-toggle"><input type="checkbox"> Superposer la correction</label>
+                <span class="sk-meas" aria-live="polite"></span><span class="q-status" aria-live="polite"></span>
+              </div>
+              <div class="sk-print-wrap print-only"><p>Tracé de l'élève</p><img class="sk-print sk-print-student" alt="Tracé de l'élève">
+                <p>Correction superposée au document réponse</p><img class="sk-print sk-print-corr" alt="Correction du tracé"></div>
+              <div class="selfeval" hidden>
+                <p class="se-title">Auto-évaluation — 3 points sur les 5 de la partie 2</p>
+                <p class="se-lead">Compare ton tracé à la correction ci-dessous, puis coche uniquement ce que ton tracé comporte réellement. Sois honnête : c'est toi qui repères ce qu'il te reste à travailler.</p>
+                <label class="se-item"><input type="checkbox" data-crit="0"><span>Premier critère observable sur le tracé.</span></label><label class="se-item"><input type="checkbox" data-crit="1"><span>Deuxième critère observable sur le tracé.</span></label><label class="se-item"><input type="checkbox" data-crit="2"><span>Troisième critère observable sur le tracé.</span></label>
+                <div class="se-foot"><button type="button" class="btn btn-self">Valider mon auto-évaluation</button>
+                  <span class="se-score" aria-live="polite"></span></div>
+                <p class="print-only se-print"></p>
+              </div>
+            </div>
+            <div class="sk-side"><p class="small">Consignes ou nomenclature à afficher au-dessus de la zone de tracé.</p></div>
           </div>
-          <p class="q-msg" role="alert"></p>
-          <div class="q-expl" hidden>
-            <p class="q-unit-msg" hidden></p>
-            <p class="q-expected"><span>Réponse attendue :</span> 4 bits</p>
-            <div class="q-why"><p>Un chiffre hexadécimal prend 16 valeurs (de 0 à F). Or 16 = 2<sup>4</sup> : <strong>4 bits</strong> suffisent et sont nécessaires.</p><p>C'est pour cela que l'hexadécimal est si pratique : chaque chiffre correspond exactement à 4 bits.</p></div>
-          </div>
-        </div>
-      <div class="qbar" role="group" aria-label="Q2.4–2.6"><div class="qb-num">Q2.4–2.6</div><div class="qb-docs">Documents à consulter : <button type="button" class="doc-chip" data-doc="DT1" aria-pressed="false">DT1</button></div><div class="qb-ans">Répondre : ci-dessous</div><div class="qb-title">Étude d'un des 8 éléments d'une adresse IPv6 : l'élément <code>ec1f</code></div></div>
-        <div class="q" id="q2_4" data-q="q2_4">
-          <p class="q-stem"><span class="q-num">Q2.4</span> <strong>Convertis le nombre hexadécimal <code>ec1f</code> en décimal.</strong></p>
-          <p class="q-hint" id="h-q2_4">Nombre entier. Les espaces entre milliers sont acceptés.</p>
-          <div class="q-row">
-            <input type="text" class="q-input" id="in-q2_4" aria-label="Réponse Q2.4" aria-describedby="h-q2_4" autocomplete="off" autocapitalize="off" spellcheck="false">
-            <button type="button" class="btn btn-validate">Valider</button>
-            <span class="q-status" aria-live="polite"></span>
-            <span class="print-only pstat">Non validée : comptée fausse</span>
-          </div>
-          <p class="q-msg" role="alert"></p>
-          <div class="q-expl" hidden>
-            <p class="q-unit-msg" hidden></p>
-            <p class="q-expected"><span>Réponse attendue :</span> 60 447</p>
-            <div class="q-why"><p>Chaque chiffre est pondéré par une puissance de 16, de droite à gauche :</p><p>e × 16<sup>3</sup> + c × 16<sup>2</sup> + 1 × 16<sup>1</sup> + f × 16<sup>0</sup></p><p>= 14 × 4 096 + 12 × 256 + 1 × 16 + 15 × 1</p><p>= 57 344 + 3 072 + 16 + 15 = <strong>60 447</strong>.</p></div>
-          </div>
-        </div>
-        <div class="q" id="q2_5" data-q="q2_5">
-          <p class="q-stem"><span class="q-num">Q2.5</span> <strong>Convertis <code>ec1f</code> en binaire.</strong></p>
-          <p class="q-hint" id="h-q2_5">Écris les 16 bits ; les espaces sont facultatifs.</p>
-          <div class="q-row">
-            <input type="text" class="q-input" id="in-q2_5" aria-label="Réponse Q2.5" aria-describedby="h-q2_5" autocomplete="off" autocapitalize="off" spellcheck="false">
-            <button type="button" class="btn btn-validate">Valider</button>
-            <span class="q-status" aria-live="polite"></span>
-            <span class="print-only pstat">Non validée : comptée fausse</span>
-          </div>
-          <p class="q-msg" role="alert"></p>
-          <div class="q-expl" hidden>
-            <p class="q-unit-msg" hidden></p>
-            <p class="q-expected"><span>Réponse attendue :</span> <code>1110 1100 0001 1111</code></p>
-            <div class="q-why"><p>Chaque chiffre hexadécimal se traduit directement par 4 bits :</p><ul><li>e = 14 → <code>1110</code></li><li>c = 12 → <code>1100</code></li><li>1 → <code>0001</code></li><li>f = 15 → <code>1111</code></li></ul><p>On met les groupes bout à bout : <code>1110 1100 0001 1111</code>. Le « 1 » garde ses zéros de tête, sinon les bits suivants seraient décalés.</p></div>
-          </div>
-        </div>
-        <div class="q" id="q2_6" data-q="q2_6">
-          <p class="q-stem"><span class="q-num">Q2.6</span> <strong>Sur combien de bits un élément d'adresse IPv6 (comme <code>ec1f</code>) est-il codé ?</strong></p>
-          <p class="q-hint" id="h-q2_6">Nombre entier. Saisis la valeur <strong>avec son unité</strong> : l'unité vaut la moitié des points de la question.</p>
-          <div class="q-row">
-            <input type="text" class="q-input" id="in-q2_6" aria-label="Réponse Q2.6" aria-describedby="h-q2_6" autocomplete="off" autocapitalize="off" spellcheck="false">
-            <button type="button" class="btn btn-validate">Valider</button>
-            <span class="q-status" aria-live="polite"></span>
-            <span class="print-only pstat">Non validée : comptée fausse</span>
-          </div>
-          <p class="q-msg" role="alert"></p>
-          <div class="q-expl" hidden>
-            <p class="q-unit-msg" hidden></p>
-            <p class="q-expected"><span>Réponse attendue :</span> 16 bits (soit 2 octets)</p>
-            <div class="q-why"><p>4 chiffres hexadécimaux × 4 bits = <strong>16 bits</strong> par élément.</p></div>
-          </div>
-        </div>
-      <div class="qbar" role="group" aria-label="Q2.7–2.8"><div class="qb-num">Q2.7–2.8</div><div class="qb-docs">Documents à consulter : <button type="button" class="doc-chip" data-doc="DP1" aria-pressed="false">DP1</button></div><div class="qb-ans">Répondre : ci-dessous</div><div class="qb-title">Généralisation</div></div>
-        <div class="q" id="q2_7" data-q="q2_7">
-          <p class="q-stem"><span class="q-num">Q2.7</span> <strong>Sur combien de bits une adresse IPv6 complète est-elle codée ?</strong></p>
-          <p class="q-hint" id="h-q2_7">Nombre entier. Saisis la valeur <strong>avec son unité</strong> : l'unité vaut la moitié des points de la question.</p>
-          <div class="q-row">
-            <input type="text" class="q-input" id="in-q2_7" aria-label="Réponse Q2.7" aria-describedby="h-q2_7" autocomplete="off" autocapitalize="off" spellcheck="false">
-            <button type="button" class="btn btn-validate">Valider</button>
-            <span class="q-status" aria-live="polite"></span>
-            <span class="print-only pstat">Non validée : comptée fausse</span>
-          </div>
-          <p class="q-msg" role="alert"></p>
-          <div class="q-expl" hidden>
-            <p class="q-unit-msg" hidden></p>
-            <p class="q-expected"><span>Réponse attendue :</span> 128 bits (soit 16 octets)</p>
-            <div class="q-why"><p>8 éléments × 16 bits = <strong>128 bits</strong>, quatre fois plus qu'une adresse IPv4.</p></div>
-          </div>
-        </div>
-        <div class="q" id="q2_8" data-q="q2_8">
-          <p class="q-stem"><span class="q-num">Q2.8</span> <strong>Combien d'appareils différents peut-on relier sur Internet avec la norme IPv6 ?</strong></p>
-          <p class="q-hint" id="h-q2_8">Écris le résultat en notation scientifique, arrondi au dixième (par exemple <code>1,2 × 10^5</code> ou <code>1,2e5</code>).</p>
-          <div class="q-row">
-            <input type="text" class="q-input" id="in-q2_8" aria-label="Réponse Q2.8" aria-describedby="h-q2_8" autocomplete="off" autocapitalize="off" spellcheck="false">
-            <button type="button" class="btn btn-validate">Valider</button>
-            <span class="q-status" aria-live="polite"></span>
-            <span class="print-only pstat">Non validée : comptée fausse</span>
-          </div>
-          <p class="q-msg" role="alert"></p>
-          <div class="q-expl" hidden>
-            <p class="q-unit-msg" hidden></p>
-            <p class="q-expected"><span>Réponse attendue :</span> 2<sup>128</sup> ≈ 3,4 × 10<sup>38</sup></p>
-            <div class="q-why"><p>128 bits donnent 2<sup>128</sup> adresses, soit exactement 340 282 366 920 938 463 463 374 607 431 768 211 456.</p><p>En notation scientifique : <strong>3,4 × 10<sup>38</sup></strong>. C'est environ 7,9 × 10<sup>28</sup> fois plus qu'avec IPv4.</p></div>
-          </div>
-        </div>
-    </div>
-  </section>
-
-  <section class="part" id="partie-3" aria-labelledby="t-partie-3">
-    <header class="part-head"><div class="part-num" aria-hidden="true">3</div>
-      <div><h2 id="t-partie-3"><span class="sr-only">Partie 3 : </span>Nombres flottants sur 32 bits</h2>
-        <div class="duree">Durée conseillée : 25 min · Barème : 6 points, soit 41,7 % de la note</div></div></header>
-    <div class="part-body">
-      <p>Un nombre à virgule au format <em>float</em> occupe 32 bits, répartis en trois champs :</p><figure class="fig"><svg viewBox="0 0 640 96" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Organisation des 32 bits d'un nombre flottant : 1 bit de signe, 8 bits d'exposant, 23 bits de mantisse">
-<g font-family="Bahnschrift, 'Roboto Condensed', Arial Narrow, sans-serif" text-anchor="middle">
-<rect x="10" y="10" width="40" height="46" fill="#FFF3C4" stroke="#1C2530" stroke-width="2"/>
-<rect x="50" y="10" width="160" height="46" fill="#E6EEF8" stroke="#1C2530" stroke-width="2"/>
-<rect x="210" y="10" width="420" height="46" fill="#E2F1E7" stroke="#1C2530" stroke-width="2"/>
-<text x="30" y="40" font-size="18" font-weight="700" fill="#1C2530">S</text>
-<text x="130" y="40" font-size="18" font-weight="700" fill="#1C2530">Exposant · 8 bits</text>
-<text x="420" y="40" font-size="18" font-weight="700" fill="#1C2530">Mantisse · 23 bits</text>
-<text x="30" y="78" font-size="13" fill="#46525C">bit 31</text>
-<text x="130" y="78" font-size="13" fill="#46525C">bits 30 → 23</text>
-<text x="420" y="78" font-size="13" fill="#46525C">bits 22 → 0</text>
-</g></svg></figure><ul>
-<li><strong>Signe</strong> : <code>0</code> = positif, <code>1</code> = négatif.</li>
-<li><strong>Exposant</strong> : exposant réel = valeur des 8 bits d'exposant − 127 (décalage).</li>
-<li><strong>Mantisse</strong> : on lit <code>1,mantisse</code> en binaire ; les bits après la virgule valent ½, ¼, ⅛, 1/16…</li>
-<li><strong>Valeur</strong> = signe × (1,mantisse)<sub>2</sub> × 2<sup>exposant − 127</sup>.</li>
-</ul><p><em>Exemple du cours :</em> <code>0 10000010 11000000000000000000000</code> : signe +, exposant 130 − 127 = 3, mantisse 1,11<sub>2</sub> = 1,75 → +1,75 × 2<sup>3</sup> = <strong>14</strong>.</p>
-      <div class="qbar" role="group" aria-label="Q3.1–3.3"><div class="qb-num">Q3.1–3.3</div><div class="qb-docs">Documents à consulter : <button type="button" class="doc-chip" data-doc="DT2" aria-pressed="false">DT2</button></div><div class="qb-ans">Répondre : ci-dessous</div><div class="qb-title">Retrouve la valeur décimale des nombres flottants suivants</div></div>
-        <div class="q" id="q3_1" data-q="q3_1">
-          <p class="q-stem"><span class="q-num">Q3.1</span> <strong><code>1 10000010 11110100000000000000000</code></strong></p>
-          <p class="q-hint" id="h-q3_1">Donne la valeur décimale exacte, avec son signe (virgule ou point décimal acceptés).</p>
-          <div class="q-row">
-            <input type="text" class="q-input" id="in-q3_1" aria-label="Réponse Q3.1" aria-describedby="h-q3_1" autocomplete="off" autocapitalize="off" spellcheck="false">
-            <button type="button" class="btn btn-validate">Valider</button>
-            <span class="q-status" aria-live="polite"></span>
-            <span class="print-only pstat">Non validée : comptée fausse</span>
-          </div>
-          <p class="q-msg" role="alert"></p>
-          <div class="q-expl" hidden>
-            <p class="q-unit-msg" hidden></p>
-            <p class="q-expected"><span>Réponse attendue :</span> −15,625</p>
-            <div class="q-why"><ul><li><strong>Signe</strong> : bit 1 → nombre <strong>négatif</strong>.</li><li><strong>Exposant</strong> : <code>10000010</code> = 128 + 2 = 130 ; exposant réel = 130 − 127 = 3.</li><li><strong>Mantisse</strong> : 1,111101<sub>2</sub> = 1 + ½ + ¼ + ⅛ + 1/16 + 1/64 = 1,953125.</li></ul><p>Valeur = −1,953125 × 2<sup>3</sup> = <strong>−15,625</strong>.</p></div>
-          </div>
-        </div>
-        <div class="q" id="q3_2" data-q="q3_2">
-          <p class="q-stem"><span class="q-num">Q3.2</span> <strong><code>0 10001000 01101100001000000000000</code></strong></p>
-          <p class="q-hint" id="h-q3_2">Donne la valeur décimale exacte, avec son signe (virgule ou point décimal acceptés).</p>
-          <div class="q-row">
-            <input type="text" class="q-input" id="in-q3_2" aria-label="Réponse Q3.2" aria-describedby="h-q3_2" autocomplete="off" autocapitalize="off" spellcheck="false">
-            <button type="button" class="btn btn-validate">Valider</button>
-            <span class="q-status" aria-live="polite"></span>
-            <span class="print-only pstat">Non validée : comptée fausse</span>
-          </div>
-          <p class="q-msg" role="alert"></p>
-          <div class="q-expl" hidden>
-            <p class="q-unit-msg" hidden></p>
-            <p class="q-expected"><span>Réponse attendue :</span> 728,25</p>
-            <div class="q-why"><ul><li><strong>Signe</strong> : bit 0 → nombre <strong>positif</strong>.</li><li><strong>Exposant</strong> : <code>10001000</code> = 128 + 8 = 136 ; exposant réel = 136 − 127 = 9.</li><li><strong>Mantisse</strong> : 1,01101100001<sub>2</sub> = 1 + ¼ + ⅛ + 1/32 + 1/64 + 1/2048 = 1,42236328125.</li></ul><p>Valeur = +1,42236328125 × 2<sup>9</sup> = <strong>728,25</strong>.</p><p>Raccourci : décaler la virgule de 9 rangs donne 1011011000,01<sub>2</sub> = 728 + ¼.</p></div>
-          </div>
-        </div>
-        <div class="q" id="q3_3" data-q="q3_3">
-          <p class="q-stem"><span class="q-num">Q3.3</span> <strong><code>11000010000011100000000000000000</code></strong></p>
-          <p class="q-hint" id="h-q3_3">Les 32 bits sont donnés d'un seul bloc : découpe-les en 1 + 8 + 23. Donne la valeur décimale exacte, avec son signe (virgule ou point décimal acceptés).</p>
-          <div class="q-row">
-            <input type="text" class="q-input" id="in-q3_3" aria-label="Réponse Q3.3" aria-describedby="h-q3_3" autocomplete="off" autocapitalize="off" spellcheck="false">
-            <button type="button" class="btn btn-validate">Valider</button>
-            <span class="q-status" aria-live="polite"></span>
-            <span class="print-only pstat">Non validée : comptée fausse</span>
-          </div>
-          <p class="q-msg" role="alert"></p>
-          <div class="q-expl" hidden>
-            <p class="q-unit-msg" hidden></p>
-            <p class="q-expected"><span>Réponse attendue :</span> −35,5</p>
-            <div class="q-why"><p>Découpage : <code>1 | 10000100 | 00011100000000000000000</code>.</p><ul><li><strong>Signe</strong> : bit 1 → nombre <strong>négatif</strong>.</li><li><strong>Exposant</strong> : <code>10000100</code> = 128 + 4 = 132 ; exposant réel = 132 − 127 = 5.</li><li><strong>Mantisse</strong> : 1,000111<sub>2</sub> = 1 + 1/16 + 1/32 + 1/64 = 1,109375.</li></ul><p>Valeur = −1,109375 × 2<sup>5</sup> = <strong>−35,5</strong>.</p></div>
-          </div>
+          <p class="sk-note sk-note-wrap">La correction se superposera à ton tracé une fois la question Q2.1 validée. <span class="sk-wait" aria-live="polite"></span></p>
+          <div class="q-expl" hidden><p class="q-expected"><span>Correction du tracé</span></p>
+            <p>Démarche du tracé attendu, point par point.</p></div>
         </div>
     </div>
   </section>
@@ -883,7 +672,7 @@ body:not(.mode-training) .only-training,body:not(.mode-exam) .only-exam{display:
     <header class="recap-head"><h2 id="t-recap">Récapitulatif et note finale</h2>
       <p class="small">Les questions non validées comptent comme fausses. Chaque partie est ramenée sur 20, puis pondérée par sa durée conseillée.</p></header>
     <div id="exam-submit-wrap">
-      <p class="es-lead">Ta copie n'est pas encore corrigée : aucune réponse n'est verrouillée, tu peux encore revenir sur les questions.</p>
+      <p class="es-lead">Ta copie n'est pas encore corrigée : aucune réponse n'est verrouillée, tu peux encore revenir sur les questions et les tracés.</p>
       <button type="button" class="btn btn-exam" id="exam-submit">J'ai fini, je fais corriger ma copie</button>
       <p class="es-warn" id="exam-warn" role="alert"></p>
     </div>
@@ -898,7 +687,7 @@ body:not(.mode-training) .only-training,body:not(.mode-exam) .only-exam{display:
       <p class="final-detail small"></p>
     </div>
     <div class="recap-foot" id="recap-foot"><button type="button" class="btn btn-print">Imprimer ma copie</button>
-      <span class="small no-print">L'impression reprend tes réponses, les corrections et ce récapitulatif.</span></div>
+      <span class="small no-print">L'impression reprend tes réponses, les corrections, tes tracés et ce récapitulatif.</span></div>
   </section>
 </main>
 
@@ -911,9 +700,10 @@ body:not(.mode-training) .only-training,body:not(.mode-exam) .only-exam{display:
   <button type="button" class="btn-docs" id="btn-docs">Documents</button>
 </footer>
 
-<script>window.__PARTS__ = [{"num": "1", "title": "Adresses IPv4 : binaire et décimal", "minutes": 15, "duration": "15 min", "points": 8}, {"num": "2", "title": "Adresses IPv6 : hexadécimal, binaire et décimal", "minutes": 20, "duration": "20 min", "points": 10}, {"num": "3", "title": "Nombres flottants sur 32 bits", "minutes": 25, "duration": "25 min", "points": 6}];
-window.__QCFG__ = {"q1_1": {"label": "Q1.1", "part": "1", "pts": 1, "grader": {"type": "num", "value": 8, "absTol": 0, "unit": {"label": "bits", "accept": ["bit", "bits"]}, "variants": [{"value": 1, "absTol": 0, "unit": {"label": "octets", "accept": ["octet", "octets"]}, "strictUnit": true}]}}, "q1_2": {"label": "Q1.2", "part": "1", "pts": 2, "grader": {"type": "code", "equals": ["11000000101010000000000100000010"]}}, "q1_3": {"label": "Q1.3", "part": "1", "pts": 1, "grader": {"type": "num", "value": 256, "absTol": 0, "variants": [{"value": 254, "absTol": 0}]}}, "q1_4": {"label": "Q1.4", "part": "1", "pts": 1, "grader": {"type": "num", "value": 16, "absTol": 0, "unit": {"label": "bits", "accept": ["bit", "bits"]}, "variants": [{"value": 2, "absTol": 0, "unit": {"label": "octets", "accept": ["octet", "octets"]}, "strictUnit": true}]}}, "q1_5": {"label": "Q1.5", "part": "1", "pts": 1, "grader": {"type": "num", "value": 65536, "absTol": 0, "variants": [{"value": 65534, "absTol": 0}]}}, "q1_6": {"label": "Q1.6", "part": "1", "pts": 1, "grader": {"type": "num", "value": 32, "absTol": 0, "unit": {"label": "bits", "accept": ["bit", "bits"]}, "variants": [{"value": 4, "absTol": 0, "unit": {"label": "octets", "accept": ["octet", "octets"]}, "strictUnit": true}]}}, "q1_7": {"label": "Q1.7", "part": "1", "pts": 1, "grader": {"type": "num", "value": 4294967296, "absTol": 0}}, "q2_1": {"label": "Q2.1", "part": "2", "pts": 1, "grader": {"type": "num", "value": 14, "absTol": 0}}, "q2_2": {"label": "Q2.2", "part": "2", "pts": 1, "grader": {"type": "code", "equals": ["1110", "00001110"]}}, "q2_3": {"label": "Q2.3", "part": "2", "pts": 1, "grader": {"type": "num", "value": 4, "absTol": 0, "unit": {"label": "bits", "accept": ["bit", "bits"]}}}, "q2_4": {"label": "Q2.4", "part": "2", "pts": 2, "grader": {"type": "num", "value": 60447, "absTol": 0}}, "q2_5": {"label": "Q2.5", "part": "2", "pts": 2, "grader": {"type": "code", "equals": ["1110110000011111"]}}, "q2_6": {"label": "Q2.6", "part": "2", "pts": 1, "grader": {"type": "num", "value": 16, "absTol": 0, "unit": {"label": "bits", "accept": ["bit", "bits"]}, "variants": [{"value": 2, "absTol": 0, "unit": {"label": "octets", "accept": ["octet", "octets"]}, "strictUnit": true}]}}, "q2_7": {"label": "Q2.7", "part": "2", "pts": 1, "grader": {"type": "num", "value": 128, "absTol": 0, "unit": {"label": "bits", "accept": ["bit", "bits"]}, "variants": [{"value": 16, "absTol": 0, "unit": {"label": "octets", "accept": ["octet", "octets"]}, "strictUnit": true}]}}, "q2_8": {"label": "Q2.8", "part": "2", "pts": 1, "grader": {"type": "num", "value": 3.402823669209385e+38, "relTol": 0.015}}, "q3_1": {"label": "Q3.1", "part": "3", "pts": 2, "grader": {"type": "num", "value": -15.625, "absTol": 0.0005}}, "q3_2": {"label": "Q3.2", "part": "3", "pts": 2, "grader": {"type": "num", "value": 728.25, "absTol": 0.0005}}, "q3_3": {"label": "Q3.3", "part": "3", "pts": 2, "grader": {"type": "num", "value": -35.5, "absTol": 0.0005}}};
-window.__SKCFG__ = {};</script>
+<!-- CONFIGURATION DU SUJET : la seule partie à réécrire pour un nouvel exercice -->
+<script>window.__PARTS__ = [{"num": "1", "title": "Titre de la première partie", "minutes": 20, "duration": "20 min", "points": 2}, {"num": "2", "title": "Titre de la seconde partie", "minutes": 40, "duration": "40 min", "points": 5}];
+window.__QCFG__ = {"q1_1": {"label": "Q1.1", "part": "1", "pts": 1, "grader": {"type": "num", "value": 84.8, "absTol": 0.05, "unit": {"label": "kg", "accept": ["kg", "kilogramme", "kilogrammes"]}}}, "q1_2": {"label": "Q1.2", "part": "1", "pts": 1, "grader": {"type": "kw", "any": [[["reducteur"]]], "forbid": ["moteur", "motoreducteur"]}}, "q2_1": {"label": "Q2.1", "part": "2", "pts": 1, "grader": {"type": "code", "contains": ["kn70664k", "117584"], "rejectRaw": ["\\\\(4k\\\\)"]}}, "q2_2": {"label": "Q2.2", "part": "2", "pts": 1, "grader": {"type": "yesno", "value": true}}};
+window.__SKCFG__ = {"sk_q2_3": {"bg": "DEMO", "deps": ["q2_1"], "label": "Q2.3", "part": "2", "pts": 3, "criteria": ["Premier critère observable sur le tracé.", "Deuxième critère observable sur le tracé.", "Troisième critère observable sur le tracé."]}};</script>
 <script>/*GRADING-START*/
 var Grading = (function () {
   "use strict";
@@ -1200,7 +990,7 @@ if (typeof module !== "undefined") module.exports = Grading;
   var dirty = false;
   var MODE = null;                     // "training" | "exam"
   var graded = false;                  // copie corrigée (toujours vrai en entraînement)
-  var CONSEIL_MIN = 60;
+  var CONSEIL_MIN = 300;
 
   function $(s, r) { return (r || document).querySelector(s); }
   function $$(s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); }
